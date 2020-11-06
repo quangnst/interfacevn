@@ -39,8 +39,10 @@ export default {
     ...mapGetters(['isAuthenticated', 'loggedInUser'])
   },
   methods: {
-    async logout() {
-      await this.$auth.logout();
+    logout() {
+      localStorage.removeItem('user');
+      this.$store.dispatch('logout');
+      this.$router.push('login');
     },
   },
 }

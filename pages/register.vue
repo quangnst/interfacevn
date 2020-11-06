@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Register!</h2>
 
-          <Notification :message="error" v-if="error"/>
+          <Notification :message="error" v-if="error" />
 
           <form method="post" @submit.prevent="register">
             <div class="field">
@@ -45,7 +45,9 @@
               </div>
             </div>
             <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Register</button>
+              <button type="submit" class="button is-dark is-fullwidth">
+                Register
+              </button>
             </div>
           </form>
 
@@ -59,44 +61,36 @@
 </template>
 
 <script>
-import Notification from '~/components/Notification'
+import Notification from "~/components/Notification";
 
 export default {
-  middleware: 'guest',
+  middleware: "guest",
   components: {
-    Notification,
+    Notification
   },
 
   data() {
     return {
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: "",
       error: null
-    }
+    };
   },
 
   methods: {
     async register() {
       try {
-        await this.$axios.post('auth/signup', {
+        await this.$axios.post("auth/signup", {
           username: this.username,
           email: this.email,
           password: this.password
-        })
-
-        await this.$auth.loginWith('local', {
-          data: {
-          username: this.username,
-          password: this.password
-          },
-        })
-
-        this.$router.push('/')
+        });
+        this.$router.push("login");
       } catch (e) {
-        this.error = e.response.data.message
+        this.error = e.response.data.message;
       }
     }
   }
-}
+};
 </script>

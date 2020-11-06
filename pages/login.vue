@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Welcome back!</h2>
 
-          <Notification :message="error" v-if="error"/>
+          <Notification :message="error" v-if="error" />
 
           <form method="post" @submit.prevent="login">
             <div class="field">
@@ -31,12 +31,15 @@
               </div>
             </div>
             <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Log In</button>
+              <button type="submit" class="button is-dark is-fullwidth">
+                Log In
+              </button>
             </div>
           </form>
           <div class="has-text-centered" style="margin-top: 20px">
             <p>
-              Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
+              Don't have an account?
+              <nuxt-link to="/register">Register</nuxt-link>
             </p>
           </div>
         </div>
@@ -46,36 +49,43 @@
 </template>
 
 <script>
-import Notification from '~/components/Notification'
+import Notification from "~/components/Notification";
+import axios from "axios";
 
 export default {
   components: {
-    Notification,
+    Notification
   },
 
   data() {
     return {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       error: null
-    }
+    };
   },
 
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith('local', {
-          data: {
-          username: this.username,
-          password: this.password
-          }
-        })
-        
-        this.$router.push('/')
+        await this.$axios
+          .post("auth/signin", {
+            username: this.username,
+            password: this.password
+          })
+          .then(response => {
+            if (response.data.accessToken) {
+              localStorage.setItem("user", JSON.stringify(response.data));
+              this.$store.dispatch("login", response.data);
+              this.$router.push("/");
+            }
+
+            return response.data;
+          });
       } catch (e) {
-        this.error = e.response.data.message
+        this.error = e.response.data.message;
       }
     }
   }
-}
+};
 </script>
