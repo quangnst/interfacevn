@@ -1,49 +1,81 @@
 <template>
-  <nav class="navbar is-light">
-    <div class="container">
-      <div class="navbar-brand">
-        <nuxt-link class="navbar-item" to="/">Nuxt Auth</nuxt-link>
-        <button class="button navbar-burger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <div class="navbar-item has-dropdown is-hoverable" v-if="isAuthenticated">
-            <a class="navbar-link">
-              {{ loggedInUser.username }}
-            </a>
-            <div class="navbar-dropdown">
-              <nuxt-link class="navbar-item" to="/profile">My Profile</nuxt-link>
-              <hr class="navbar-divider"/>
-              <a class="navbar-item" @click="logout">Logout</a>
-            </div>
-          </div>
-          <template v-else>
-            <nuxt-link class="navbar-item" to="/register">Register</nuxt-link>
-            <nuxt-link class="navbar-item" to="/login">Log In</nuxt-link>
-          </template>
+  <div id="app">
+    <no-ssr>
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a href class="navbar-brand" @click.prevent>Interface</a>
+        <div class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <router-link to="/home" class="nav-link">
+              Home
+            </router-link>
+          </li>
+          <li v-if="showAdminBoard" class="nav-item">
+            <router-link to="/admin" class="nav-link">Admin Board</router-link>
+          </li>
+          <li v-if="showModeratorBoard" class="nav-item">
+            <router-link to="/mod" class="nav-link">Moderator Board</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link v-if="currentUser" to="/boarduser" class="nav-link">User</router-link>
+          </li>
         </div>
-      </div>
-    </div>
-  </nav>
+
+        <div v-if="!currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link to="/register" class="nav-link">
+              Sign Up
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/login" class="nav-link">
+              Login
+            </router-link>
+          </li>
+        </div>
+
+        <div v-else class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link to="/profile" class="nav-link">
+              {{ currentUser.username }}
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href @click.prevent="logOut">
+              LogOut
+            </a>
+          </li>
+        </div>
+      </nav>
+    </no-ssr>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+    currentUser() {
+      return this.$store.state.localStorage.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
+
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+
+      return false;
+    }
   },
   methods: {
-    logout() {
-      localStorage.removeItem('user');
-      this.$store.dispatch('logout');
-      this.$router.push('login');
-    },
-  },
-}
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  }
+};
 </script>

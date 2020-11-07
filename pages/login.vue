@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Welcome back!</h2>
 
-          <Notification :message="error" v-if="error" />
+          <!-- <Notification :message="error" v-if="error" /> -->
 
           <form method="post" @submit.prevent="login">
             <div class="field">
@@ -15,7 +15,7 @@
                   type="text"
                   class="input"
                   name="username"
-                  v-model="username"
+                  v-model="user.username"
                 />
               </div>
             </div>
@@ -26,7 +26,7 @@
                   type="password"
                   class="input"
                   name="password"
-                  v-model="password"
+                  v-model="user.password"
                 />
               </div>
             </div>
@@ -49,8 +49,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Notification from "~/components/Notification";
-import axios from "axios";
+
+import User from "../models/user";
 
 export default {
   components: {
@@ -59,32 +61,39 @@ export default {
 
   data() {
     return {
-      username: "",
-      password: "",
-      error: null
+      user: {
+        username: '',
+        password: ''
+      },
+      loading: false,
+      message: ""
     };
   },
-
+  computed: mapState({
+    loggedIn: "auth/loggedIn"
+  }),
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
+    }
+  },
   methods: {
-    async login() {
-      try {
-        await this.$axios
-          .post("auth/signin", {
-            username: this.username,
-            password: this.password
-          })
-          .then(response => {
-            if (response.data.accessToken) {
-              localStorage.setItem("user", JSON.stringify(response.data));
-              this.$store.dispatch("login", response.data);
-              this.$router.push("/");
-            }
-
-            return response.data;
-          });
-      } catch (e) {
-        this.error = e.response.data.message;
-      }
+    login() {
+      console.log(this.user)
+      this.loading = true;
+      this.$store.dispatch("auth/login", this.user).then(
+        () => {
+          this.$router.push("/profile");
+        },
+        error => {
+          console.log(error)
+          this.loading = false;
+          this.message =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
     }
   }
 };

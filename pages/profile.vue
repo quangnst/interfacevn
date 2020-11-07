@@ -5,11 +5,11 @@
       <div class="content">
         <p>
           <strong>Username:</strong>
-          {{ loggedInUser.username }}
+          {{ currentUser }}
         </p>
         <p>
           <strong>Email:</strong>
-          {{ loggedInUser.email }}
+          {{ currentUser }}
         </p>
       </div>
     </div>
@@ -20,9 +20,16 @@
 import { mapGetters } from "vuex";
 
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   computed: {
-    ...mapGetters(["loggedInUser"])
+    currentUser() {
+      return this.$store.state.localStorage.user;
+    }
+  },
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push('/login');
+    }
   }
 };
 </script>

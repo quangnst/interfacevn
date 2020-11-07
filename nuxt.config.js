@@ -14,7 +14,7 @@ module.exports = {
       {
         rel: "stylesheet",
         href:
-          "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
+          "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       }
     ]
   },
@@ -44,17 +44,13 @@ module.exports = {
   axios: {
     baseURL: "http://localhost:8080/api"
   },
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: false,
-          user: false,
-          logout: false
-        }
-      }
-    }
-  },
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth"]
+  modules: [
+    "@nuxtjs/axios", "nuxt-vuex-localstorage"
+    // [
+    //   "nuxt-vuex-localstorage",
+    //   {
+    //     localStorage: ["user"] //  If not entered, “localStorage” is the default value
+    //   }
+    // ]
+  ]
 };
-

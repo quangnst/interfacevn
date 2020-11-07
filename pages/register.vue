@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-4">
           <h2 class="title has-text-centered">Register!</h2>
 
-          <Notification :message="error" v-if="error" />
+          <!-- <Notification :message="error" v-if="error" /> -->
 
           <form method="post" @submit.prevent="register">
             <div class="field">
@@ -64,32 +64,38 @@
 import Notification from "~/components/Notification";
 
 export default {
-  middleware: "guest",
   components: {
     Notification
   },
 
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
-      error: null
+      username: '',
+      password: '',
+      email: '',
+      submitted: false,
+      successful: false,
+      message: ""
     };
   },
-
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
+  mounted() {
+    if (this.loggedIn) {
+      // this.$router.push("/profile");
+    }
+  },
   methods: {
-    async register() {
-      try {
-        await this.$axios.post("auth/signup", {
-          username: this.username,
-          email: this.email,
-          password: this.password
-        });
-        this.$router.push("login");
-      } catch (e) {
-        this.error = e.response.data.message;
-      }
+    register() {
+      this.$store.dispatch("auth/register", {username: this.username, email: this.email, password: this.password}).then(
+        data => {
+          this.message = data.message;
+          this.successful = true;
+        }
+      );
     }
   }
 };
