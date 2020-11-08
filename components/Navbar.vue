@@ -1,5 +1,5 @@
 <template>
-  <no-ssr>
+  <client-only>
     <v-app-bar
       app
       color="white"
@@ -29,7 +29,7 @@
         </a>
       </div>
     </v-app-bar>
-  </no-ssr>
+  </client-only>
 </template>
 
 <script>
