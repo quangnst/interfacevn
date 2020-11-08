@@ -1,53 +1,35 @@
 <template>
-  <div id="app">
-    <no-ssr>
-      <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a href class="navbar-brand" @click.prevent>Interface</a>
-        <div class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <router-link to="/home" class="nav-link">
-              Home
-            </router-link>
-          </li>
-          <li v-if="showAdminBoard" class="nav-item">
-            <router-link to="/admin" class="nav-link">Admin Board</router-link>
-          </li>
-          <li v-if="showModeratorBoard" class="nav-item">
-            <router-link to="/mod" class="nav-link">Moderator Board</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link v-if="currentUser" to="/boarduser" class="nav-link">User</router-link>
-          </li>
-        </div>
+  <no-ssr>
+    <v-app-bar
+      app
+      color="white"
+      height="70"
+    >
+      <v-toolbar-title>
+        <router-link to="/">
+          <img src="~/assets/img/logo.png" width="100" />
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer />
+      <div v-if="!currentUser">
+        <router-link to="/register" class="mx-4 text-decoration-none">
+          Sign Up
+        </router-link>
+        <router-link to="/login" class="mx-4 text-decoration-none">
+          Login
+        </router-link>
+      </div>
 
-        <div v-if="!currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <router-link to="/register" class="nav-link">
-              Sign Up
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/login" class="nav-link">
-              Login
-            </router-link>
-          </li>
-        </div>
-
-        <div v-else class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <router-link to="/profile" class="nav-link">
-              {{ currentUser.username }}
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href @click.prevent="logOut">
-              LogOut
-            </a>
-          </li>
-        </div>
-      </nav>
-    </no-ssr>
-  </div>
+      <div v-else>
+        <router-link to="/profile" class="nav-link">
+          {{ currentUser.username }}
+        </router-link>
+        <a class="nav-link" href @click.prevent="logOut"
+          ><v-icon>mdi-logout</v-icon> LogOut
+        </a>
+      </div>
+    </v-app-bar>
+  </no-ssr>
 </template>
 
 <script>
@@ -58,14 +40,14 @@ export default {
     },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_ADMIN');
+        return this.currentUser.roles.includes("ROLE_ADMIN");
       }
 
       return false;
     },
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
+        return this.currentUser.roles.includes("ROLE_MODERATOR");
       }
 
       return false;
@@ -73,8 +55,8 @@ export default {
   },
   methods: {
     logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
     }
   }
 };

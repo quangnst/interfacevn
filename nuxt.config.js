@@ -11,13 +11,16 @@ module.exports = {
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      {
-        rel: "stylesheet",
-        href:
-          "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      }
+      // {
+      //   rel: "stylesheet",
+      //   href:
+      //     "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      // }
     ]
   },
+  css: [
+    '@/assets/css/main.scss'
+  ],
   /*
    ** Customize the progress bar color
    */
@@ -40,12 +43,11 @@ module.exports = {
       }
     }
   },
-
   axios: {
     baseURL: "http://localhost:8080/api"
   },
   modules: [
-    "@nuxtjs/axios", "nuxt-vuex-localstorage"
+    "@nuxtjs/axios", "nuxt-vuex-localstorage", '@nuxtjs/vuetify'
     // [
     //   "nuxt-vuex-localstorage",
     //   {
