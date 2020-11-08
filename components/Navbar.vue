@@ -1,10 +1,6 @@
 <template>
   <client-only>
-    <v-app-bar
-      app
-      color="white"
-      height="70"
-    >
+    <v-app-bar app color="white" height="70">
       <v-toolbar-title>
         <router-link to="/">
           <img src="~/assets/img/logo.png" width="100" />
