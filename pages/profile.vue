@@ -1,35 +1,29 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <h2 class="title">My Profile</h2>
-      <div class="content">
-        <p>
-          <strong>Username:</strong>
-          {{ currentUser }}
-        </p>
-        <p>
-          <strong>Email:</strong>
-          {{ currentUser }}
-        </p>
-      </div>
+<section class="section">
+  <div class="container">
+    <h2 class="title">My Profile</h2>
+    <div class="content">
+      <p>
+        <strong>Username:</strong>
+        {{ loggedInUser.username }}
+      </p>
+      <p>
+        <strong>Email:</strong>
+        {{ loggedInUser.email }}
+      </p>
     </div>
-  </section>
+  </div>
+</section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
-  // middleware: "auth",
   computed: {
-    currentUser() {
-      return this.$store.state.localStorage.user;
-    }
-  },
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push('/login');
-    }
+    ...mapGetters(['loggedInUser'])
   }
-};
+}
 </script>

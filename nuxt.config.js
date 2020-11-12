@@ -11,15 +11,14 @@ module.exports = {
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      // {
-      //   rel: "stylesheet",
-      //   href:
-      //     "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      // }
+      {
+        rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css'
+      }
     ]
   },
   css: [
-    '@/assets/css/main.scss'
+    // '@/assets/css/main.scss'
   ],
   /*
    ** Customize the progress bar color
@@ -41,18 +40,25 @@ module.exports = {
           exclude: /(node_modules)/
         });
       }
-    }
+    },
+    transpile: ["vee-validate/dist/rules"]
   },
   axios: {
     baseURL: "http://localhost:8080/api"
   },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: false,
+          user: false,
+          logout: false
+        }
+      }
+    }
+  },
+  plugins: ['~/plugins/persistedState.js', '~/plugins/vee-validate.js'],
   modules: [
-    "@nuxtjs/axios", "nuxt-vuex-localstorage", '@nuxtjs/vuetify'
-    // [
-    //   "nuxt-vuex-localstorage",
-    //   {
-    //     localStorage: ["user"] //  If not entered, “localStorage” is the default value
-    //   }
-    // ]
+    "@nuxtjs/axios", '@nuxtjs/auth'
   ]
 };

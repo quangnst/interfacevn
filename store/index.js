@@ -1,14 +1,9 @@
-// import Vue from 'vue';
-// import Vuex from 'vuex';
+export const getters = {
+  isAuthenticated(state) {
+    return state.auth.loggedIn
+  },
 
-// import { auth } from './auth.module';
-
-// Vue.use(Vuex);
-
-// const store = new Vuex.Store({
-//   modules: {
-//     auth
-//   }
-// });
-
-// export default store
+  loggedInUser(state) {
+    return state.auth.user
+  }
+}

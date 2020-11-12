@@ -1,126 +1,92 @@
 <template>
-  <v-app>
-    <v-container class="fill-height auth" fluid>
-      <v-layout
-        align-center
-        justify-end
-        class="mx-auto"
-        style="max-width: 1200px"
-      >
-        <v-flex class="login-form">
-          <v-card light="light" class="rounded-0">
-            <v-card-text class="pa-8">
-              <div class="my-2 text-center">
-                <img src="../assets/img/logo.png" width="180" class="mx-auto" />
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <h2 class="title has-text-centered">Welcome back!</h2>
+
+        <Notification :message="error" v-if="error" />
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(userLogin)">
+            <div class="field">
+
+              <label class="label">Email</label>
+              <div class="control">
+                <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
+                  <input type="email" class="input" name="email" v-model="login.email" />
+                  <span class="input-invalid-message">
+                    {{ errors[0] }}
+                  </span>
+                </ValidationProvider>
               </div>
-              <v-form class="pb-4">
-                <v-text-field
-                  v-model.trim="user.username"
-                  light
-                  outlined
-                  large
-                  hide-details="auto"
-                  append-icon="mdi-lock"
-                  label="Username"
-                  type="text"
-                  class="mt-4 rounded-0"
-                ></v-text-field>
-                <v-text-field
-                  v-model.trim="user.password"
-                  light
-                  outlined
-                  large
-                  hide-details="auto"
-                  append-icon="mdi-lock"
-                  label="Password"
-                  type="password"
-                  class="mt-4 rounded-0"
-                ></v-text-field>
 
-                <!-- <p
-                    v-if="errorsAuth"
-                    class="red--text text-center subtitle-2 mt-2 mb-0"
-                  >
-                    {{ errorsAuth }}
-                  </p> -->
-                <div class="text-center">
-                  <v-btn
-                    x-large
-                    @click="login"
-                    text
-                    class="primary text-h6 white--text px-12 mt-8 text-capitalize rounded-0"
-                    >Login</v-btn
-                  >
-                </div>
-              </v-form>
-            </v-card-text>
-          </v-card>
-
-          <div class="extras text-right mt-5">
-            <v-btn text @click="showPasswordReset = true"
-              >Forgot Password</v-btn
-            >
-            <v-btn text @click="$router.push({ name: 'register' })"
-              >Create an Account</v-btn
-            >
-          </div>
-        </v-flex>
-      </v-layout>
-      <!-- <PasswordReset
-        v-if="showPasswordReset"
-        @close="togglePasswordReset()"
-      ></PasswordReset> -->
-    </v-container>
-  </v-app>
+            </div>
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control">
+                <ValidationProvider v-slot="{ errors }" name="password" rules="required">
+                  <input type="password" class="input" name="password" v-model="login.password" />
+                  <span class="input-invalid-message">
+                    {{ errors[0] }}
+                  </span>
+                </ValidationProvider>
+              </div>
+            </div>
+            <div class="control">
+              <button type="submit" class="button is-dark is-fullwidth">Log In</button>
+            </div>
+          </form>
+        </ValidationObserver>
+        <div class="has-text-centered" style="margin-top: 20px">
+          <p>
+            Don't have an account? <nuxt-link to="/register">Register</nuxt-link>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Notification from "~/components/Notification";
-
-import User from "../models/user";
+import Notification from '~/components/Notification'
+import {
+  ValidationObserver,
+  ValidationProvider
+} from "vee-validate";
 
 export default {
   components: {
-    Notification
+    Notification,
+    ValidationObserver: ValidationObserver,
+    ValidationProvider: ValidationProvider
   },
-
   data() {
     return {
-      user: {
-        username: "",
-        password: ""
+      login: {
+        email: '',
+        password: ''
       },
-      loading: false,
-      message: ""
-    };
-  },
-  computed: mapState({
-    loggedIn: "auth/loggedIn"
-  }),
-  created() {
-    if (this.loggedIn) {
-      this.$router.push("/profile");
+      error: null
     }
   },
+
   methods: {
-    login() {
-      console.log(this.user);
-      this.loading = true;
-      this.$store.dispatch("auth/login", this.user).then(
-        () => {
+    async userLogin() {
+      console.log(this.login)
+      try {
+        let response = await this.$axios.post('auth/signin', this.login).then(resp => {
+          this.$auth.setToken('local', 'Bearer ' + resp.data.accessToken);
+          this.$axios.setHeader('Authorization', 'Bearer ' + resp.data.accessToken);
+          this.$auth.ctx.app.$axios.setHeader('Authorization', 'Bearer ' + resp.data.accessToken);
+          this.$auth.setUser(resp.data);
           this.$router.push("/profile");
-        },
-        error => {
-          console.log(error);
-          this.loading = false;
-          this.message =
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString();
-        }
-      );
+        })
+
+      } catch (e) {
+        this.error = e.response.data.message
+      }
     }
   }
-};
+}
 </script>
