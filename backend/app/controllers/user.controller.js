@@ -13,3 +13,10 @@ exports.adminBoard = (req, res) => {
 exports.moderatorBoard = (req, res) => {
   res.status(200).send("Moderator Content.");
 };
+
+exports.profileBoard = (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: 'A list of all course'
+  });
+};

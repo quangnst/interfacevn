@@ -4,6 +4,13 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 
+// Shop
+import Products from '@/components/Products'
+import Product from '@/components/Product'
+import Category from '@/components/Category'
+import Checkout from '@/components/Checkout'
+import Thakyou from '@/components/Thakyou'
+
 Vue.use(Router);
 
 export const router = new Router({
@@ -49,7 +56,35 @@ export const router = new Router({
       name: 'user',
       // lazy-loaded
       component: () => import('./views/BoardUser.vue')
-    }
+    },
+
+    {
+      path: '/products',
+      name:'products',
+      component: Products
+  },
+  {
+      path: '/product/:id',
+      name: 'product',
+      component: Product,
+      props: true
+  },
+  {
+      path: '/category/:category',
+      name: 'category',
+      component: Category,
+      props: true
+  },
+  {
+      path: '/checkout',
+      name: 'checkout',
+      component: Checkout,
+  },
+  {
+      path: '/thankyou',
+      name: 'thankyou',
+      component: Thakyou,
+  }
   ]
 });
 

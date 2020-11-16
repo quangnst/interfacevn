@@ -2,12 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const database = require("./app/config/db.config");
+const seeder = require('./app/routes/seeder/products');
+
+const products = require('./app/routes/products.routes');
+const categories = require('./app/routes/categories.routes');
 
 const app = express();
 
 var corsOptions = {
   origin: "http://localhost:3000"
 };
+
+app.use('/seeder', seeder);
 
 app.use(cors(corsOptions));
 
@@ -16,6 +22,10 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes Product
+app.use('/api/products', products);
+app.use('/api/categories', categories);
 
 const db = require("./app/models");
 const Role = db.role;
