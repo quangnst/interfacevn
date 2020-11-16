@@ -6,6 +6,8 @@ import store from './store';
 import Vuex from 'vuex';
 import VeeValidate from 'vee-validate';
 
+import '@/assets/scss/app.scss';
+
 Vue.config.productionTip = false
 
 Vue.use(Vuex);
