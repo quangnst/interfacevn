@@ -1,0 +1,21 @@
+.login {
+
+  &-page {
+    &.theme--light {
+      background: url('../img/bg.jpg') no-repeat;
+      background-size: cover;
+    }
+  }
+
+  &-shadow {
+    position: absolute;
+    width: 73%;
+    height: 15px;
+    background: #060606b8;
+    top: 103%;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: blur(27px);
+    -webkit-filter: blur(27px);
+  }
+}

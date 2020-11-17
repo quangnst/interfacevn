@@ -5,6 +5,7 @@
     color="white"
     light
     height="70"
+    v-if="currentUser"
   >
     <v-toolbar-title>
       <router-link to="/"> Vuejs </router-link>

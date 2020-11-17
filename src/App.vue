@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="interface-app" :class="[$router.currentRoute.name + '-page']">
     <AppHeader />
 
     <v-main>

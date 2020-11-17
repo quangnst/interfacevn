@@ -23,14 +23,17 @@ export const router = new Router({
     },
     {
       path: '/home',
+      name: 'home',
       component: Home
     },
     {
       path: '/login',
+      name: 'login',
       component: Login
     },
     {
       path: '/register',
+      name: 'register',
       component: Register
     },
     {
