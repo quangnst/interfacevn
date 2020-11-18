@@ -1,68 +1,117 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="username"
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >{{errors.first('username')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
-              type="email"
-              class="form-control"
-              name="email"
-            />
-            <div
-              v-if="submitted && errors.has('email')"
-              class="alert-danger"
-            >{{errors.first('email')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              type="password"
-              class="form-control"
-              name="password"
-            />
-            <div
-              v-if="submitted && errors.has('password')"
-              class="alert-danger"
-            >{{errors.first('password')}}</div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
-          </div>
-        </div>
-      </form>
+  <v-container fill-height>
+    <v-row justify="space-between">
+      <v-col cols="12" md="5">
+        <v-card
+          flat
+          max-width="400"
+          color="rgba(255,255,255,.8)"
+          rounded="xl"
+          class="pa-12 mx-auto"
+        >
+          <img class="logo" src="../assets/img/logo.png" />
 
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
-    </div>
-  </div>
+          <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign Up</h3>
+          <v-form name="form" @submit.prevent="handleRegister">
+            <v-row>
+              <v-col cols="12" class="pb-0">
+                <label for="username" class="mb-2 subtitle-2">Username</label>
+                <v-text-field
+                  v-model="user.username"
+                  v-validate="'required|min:3|max:20'"
+                  flat
+                  solo
+                  :elevation="0"
+                  required
+                  hide-details
+                  class="rounded-lg"
+                ></v-text-field>
+                <div
+                  v-if="errors.has('username')"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  Username is required!
+                </div>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <label for="username" class="mb-2 subtitle-2">Email</label>
+                <v-text-field
+                  v-model="user.email"
+                  v-validate="'required|email|max:50'"
+                  type="email"
+                  flat
+                  solo
+                  :elevation="0"
+                  required
+                  hide-details
+                  class="rounded-lg"
+                  name="email"
+                ></v-text-field>
+                <div
+                  v-if="errors.has('email')"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  Email is required!
+                </div>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <label for="password" class="mb-2 subtitle-2">Password</label>
+                <v-text-field
+                  v-model="user.password"
+                  v-validate="'required|min:6|max:40'"
+                  flat
+                  solo
+                  type="password"
+                  hide-details
+                  class="rounded-lg"
+                  name="password"
+                ></v-text-field>
+                <div
+                  v-if="errors.has('password')"
+                  class="alert alert-danger"
+                  role="alert"
+                >
+                  Password is required!
+                </div>
+              </v-col>
+              <v-col cols="12">
+                <v-btn
+                  type="submit"
+                  :disabled="loading"
+                  elevation="0"
+                  x-large
+                  dark
+                  class="rounded-lg mt-4 subtitle-1 text-none full-width"
+                >
+                  <span
+                    v-show="loading"
+                    class="spinner-border spinner-border-sm"
+                  ></span>
+                  <span>Sign Up</span>
+                </v-btn>
+
+
+                <div class="text-right mt-2">
+                  <router-link to="/login" class="text-decoration-none subtitle-2 black--text"
+                    >Back to Login in</router-link
+                  >
+                </div>
+              </v-col>
+              <v-col cols="12" sm="6" v-if="message">
+                <div class="alert alert-danger" role="alert">
+                  {{ message }}
+                </div>
+              </v-col>
+            </v-row>
+          </v-form>
+
+          <div class="login-shadow"></div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -101,7 +150,9 @@ export default {
             },
             error => {
               this.message =
-                (error.response && error.response.data && error.response.data.message) ||
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
                 error.message ||
                 error.toString();
               this.successful = false;
@@ -113,38 +164,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-</style>

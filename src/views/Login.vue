@@ -9,23 +9,22 @@
           rounded="xl"
           class="pa-12 mx-auto"
         >
-          <img
-            class="logo"
-            src="../assets/img/logo.png"
-          />
+          <img class="logo" src="../assets/img/logo.png" />
 
           <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
           <v-form name="form" @submit.prevent="handleLogin">
             <v-row>
               <v-col cols="12">
-                <v-btn type="submit" 
-                  :disabled="loading" 
-                  min-width="230" 
-                  elevation="0" 
+                <v-btn
+                  type="submit"
+                  :disabled="loading"
+                  min-width="230"
+                  elevation="0"
                   x-large
                   dark
                   color="#3f7bf0"
-                  class="rounded-lg text-none subtitle-2">
+                  class="rounded-lg text-none subtitle-2"
+                >
                   <i class="fab fa-google fa-lg mr-2"></i>
                   <span>Sign in with Google</span>
                 </v-btn>
@@ -70,18 +69,26 @@
                 </div>
               </v-col>
               <v-col cols="12">
-                <v-btn type="submit" 
+                <v-btn
+                  type="submit"
                   :disabled="loading"
-                  elevation="0" 
-                  x-large 
+                  elevation="0"
+                  x-large
                   dark
-                  class="rounded-lg mt-4 subtitle-1 text-none fill-width">
+                  class="rounded-lg mt-4 subtitle-1 text-none full-width"
+                >
                   <span
                     v-show="loading"
                     class="spinner-border spinner-border-sm"
                   ></span>
                   <span>Sign In</span>
                 </v-btn>
+
+                <div class="text-right mt-2">
+                  <router-link to="/register" class="text-decoration-none subtitle-2 black--text"
+                    >Not account? Sign up</router-link
+                  >
+                </div>
               </v-col>
               <v-col cols="12" sm="6" v-if="message">
                 <div class="alert alert-danger" role="alert">
@@ -93,11 +100,7 @@
 
           <div class="login-shadow"></div>
         </v-card>
-
       </v-col>
-      <!-- <v-col cols="6">
-        <v-img src="../assets/img/character.png" max-width="500"></v-img>
-      </v-col> -->
     </v-row>
   </v-container>
 </template>
@@ -154,38 +157,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-</style>
