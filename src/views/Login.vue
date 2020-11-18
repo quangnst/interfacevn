@@ -1,25 +1,37 @@
 <template>
   <v-container fill-height>
     <v-row justify="space-between">
-      <v-col cols="8">
+      <v-col cols="12" md="5">
         <v-card
           flat
           max-width="400"
           color="rgba(255,255,255,.8)"
           rounded="xl"
-          class="pa-12 mr-auto"
+          class="pa-12 mx-auto"
         >
           <img
-            id="profile-img"
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            class="profile-img-card"
+            class="logo"
+            src="../assets/img/logo.png"
           />
 
-          <h3 class="text-h3">Sign In</h3>
+          <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
           <v-form name="form" @submit.prevent="handleLogin">
             <v-row>
               <v-col cols="12">
-                <label for="username" class="mb-2">Username</label>
+                <v-btn type="submit" 
+                  :disabled="loading" 
+                  min-width="230" 
+                  elevation="0" 
+                  x-large
+                  dark
+                  color="#3f7bf0"
+                  class="rounded-lg text-none subtitle-2">
+                  <i class="fab fa-google fa-lg mr-2"></i>
+                  <span>Sign in with Google</span>
+                </v-btn>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <label for="username" class="mb-2 subtitle-2">Username</label>
                 <v-text-field
                   v-model="user.username"
                   v-validate="'required'"
@@ -38,8 +50,8 @@
                   Username is required!
                 </div>
               </v-col>
-              <v-col cols="12">
-                <label for="password" class="mb-2">Password</label>
+              <v-col cols="12" class="pb-0">
+                <label for="password" class="mb-2 subtitle-2">Password</label>
                 <v-text-field
                   v-model="user.password"
                   v-validate="'required'"
@@ -57,14 +69,13 @@
                   Password is required!
                 </div>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12">
                 <v-btn type="submit" 
-                  :disabled="loading" 
-                  min-width="180" 
+                  :disabled="loading"
                   elevation="0" 
                   x-large 
                   dark
-                  class="rounded-lg">
+                  class="rounded-lg mt-4 subtitle-1 text-none fill-width">
                   <span
                     v-show="loading"
                     class="spinner-border spinner-border-sm"
@@ -72,8 +83,8 @@
                   <span>Sign In</span>
                 </v-btn>
               </v-col>
-              <v-col cols="12" sm="6">
-                <div v-if="message" class="alert alert-danger" role="alert">
+              <v-col cols="12" sm="6" v-if="message">
+                <div class="alert alert-danger" role="alert">
                   {{ message }}
                 </div>
               </v-col>
