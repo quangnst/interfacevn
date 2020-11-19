@@ -8,74 +8,65 @@
     v-if="currentUser"
   >
     <v-toolbar-title>
-      <router-link to="/"> Vuejs </router-link>
+      <router-link to="/"
+        ><img class="logo pa-2 pb-0" src="../assets/img/logo.png"
+      /></router-link>
     </v-toolbar-title>
     <v-spacer />
     <template v-if="showAdminBoard">
       <router-link to="/admin" class="nav-link">Admin Board</router-link>
     </template>
-
-    <template v-if="showModeratorBoard">
-      <router-link to="/mod" class="nav-link mx-4">Moderator Board</router-link>
-    </template>
-    <router-link v-if="currentUser" to="/user" class="nav-link mx-4"
-      >User</router-link
-    >
-    <router-link v-if="currentUser" to="/products" class="nav-link mx-4"
-      >Products</router-link
-    >
-
+    <div >
+      <router-link
+        v-for="category in categories"
+        :key="category._id"
+        :to="{ name: 'category', params: { category: category.title } }"
+        class="mx-4 text-decoration-none"
+        >{{ category.title }}</router-link
+      >
+    </div>
     <v-spacer />
+
     <template v-if="!currentUser">
       <router-link to="/register" class="nav-link mx-4"> Sign Up </router-link>
       <router-link to="/login" class="nav-link mx-4"> Login </router-link>
     </template>
 
     <template v-if="currentUser" class="navbar-nav ml-auto">
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on">
-            Categories
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="category in categories" :key="category._id">
-            <router-link
-              tag="a"
-              :to="{ name: 'category', params: { category: category.title } }"
-              class="nav-link"
-              >{{ category.title }}</router-link
-            >
-          </v-list-item>
-        </v-list>
-      </v-menu>
-      <router-link tag="a" :to="{ name: 'checkout' }" class="nav-link"
-        >Cart(<span class="badge badge-light">{{ cart.length }}</span
-        >)</router-link
-      >
-
-      <router-link to="/profile" class="nav-link mx-4">
-        {{ currentUser.username }}
+      <router-link :to="{ name: 'checkout' }" class="mr-1 ml-4">
+        <v-badge
+          :content="cart.length"
+          :color="cart.length > 0 ? 'primary' : 'transparent'"
+          overlap
+        >
+          <v-icon>fal fa-shopping-cart</v-icon>
+        </v-badge>
       </router-link>
-      <a class="nav-link mx-4" href @click.prevent="logOut"> LogOut </a>
+
+      <router-link to="/profile" class="mx-4">
+        <v-icon>fal fa-user</v-icon>
+      </router-link>
+      <v-btn text class="mx-4" href @click.prevent="logOut">
+        <v-icon>fal fa-sign-out-alt</v-icon>
+      </v-btn>
     </template>
   </v-app-bar>
 </template>
 
 <script>
-import CategoriesServices from "../services/categories.service";
+import CategoriesServices from '../services/categories.service';
 export default {
   data() {
     return {
-      categories: [],
+      categories: []
     };
   },
   created() {
     return CategoriesServices.getCategories().then(
-      (response) => {
+      response => {
         this.categories = response.data;
       },
-      (error) => {
+      error => {
         console.log(error);
       }
     );
@@ -86,27 +77,27 @@ export default {
     },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_ADMIN");
+        return this.currentUser.roles.includes('ROLE_ADMIN');
       }
 
       return false;
     },
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_MODERATOR");
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
       }
 
       return false;
     },
     cart() {
       return this.$store.getters.getCart;
-    },
+    }
   },
   methods: {
     logOut() {
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    },
-  },
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  }
 };
 </script>

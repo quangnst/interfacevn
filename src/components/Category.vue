@@ -9,7 +9,7 @@ export default {
   props: ["category"],
   data() {
     return {
-      products: [],
+      products: []
     };
   },
   components: {
@@ -27,8 +27,10 @@ export default {
   },
   methods: {
     fetch() {
+      this.$store.state.toggle.isLoading = true;
       return CategoriesServices.getCategoriesDetails(this.category).then(
         (response) => {
+          this.$store.state.toggle.isLoading = false;
           this.products = response.data;
         },
         (error) => {

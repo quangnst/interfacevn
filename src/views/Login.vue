@@ -17,7 +17,7 @@
               <v-col cols="12">
                 <v-btn
                   type="submit"
-                  :disabled="loading"
+                  :loading="loading"
                   min-width="230"
                   elevation="0"
                   x-large
@@ -74,7 +74,7 @@
               <v-col cols="12">
                 <v-btn
                   type="submit"
-                  :disabled="loading"
+                  :loading="loading"
                   elevation="0"
                   x-large
                   dark

@@ -30,6 +30,7 @@ export default {
     };
   },
   created() {
+    this.$store.state.toggle.isLoading = true;
     return ProductsServices.getProducts().then(
       (response) => {
         this.products = response.data.products;
@@ -37,6 +38,8 @@ export default {
         this.pages = response.data.pages;
         this.nextUrl = response.data.nextUrl;
         this.prevUrl = response.data.prevUrl;
+
+        this.$store.state.toggle.isLoading = false;
       },
       (error) => {
         console.log(error);
