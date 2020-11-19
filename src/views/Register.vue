@@ -25,6 +25,7 @@
                   required
                   hide-details
                   class="rounded-lg"
+                  name="username"
                 ></v-text-field>
                 <div
                   v-if="errors.has('username')"
@@ -63,6 +64,7 @@
                   v-validate="'required|min:6|max:40'"
                   flat
                   solo
+                  autocomplete
                   type="password"
                   hide-details
                   class="rounded-lg"
@@ -122,6 +124,7 @@ export default {
   data() {
     return {
       user: new User('', '', ''),
+      loading: false,
       submitted: false,
       successful: false,
       message: ''

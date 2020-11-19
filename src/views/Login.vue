@@ -40,6 +40,7 @@
                   required
                   hide-details
                   class="rounded-lg"
+                  name="username"
                 ></v-text-field>
                 <div
                   v-if="errors.has('username')"
@@ -56,9 +57,11 @@
                   v-validate="'required'"
                   flat
                   solo
+                  autocomplete
                   type="password"
                   hide-details
                   class="rounded-lg"
+                  name="password"
                 ></v-text-field>
                 <div
                   v-if="errors.has('password')"

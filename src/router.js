@@ -22,11 +22,6 @@ export const router = new Router({
       component: Home
     },
     {
-      path: '/home',
-      name: 'home',
-      component: Home
-    },
-    {
       path: '/login',
       name: 'login',
       component: Login
