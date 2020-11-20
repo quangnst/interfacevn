@@ -1,38 +1,39 @@
 <template>
   <div>
     <Cards :products="products" />
-    <p class="text-center mb-0">{{ currentPage + 1 }} / {{ pages }}</p>
-    <ul class="pagination justify-content-center">
-      <li class="page-item" :class="{ disabled: prevUrl === '' }">
-        <button class="page-link" @click="checkPage(prevUrl)">Previous</button>
-      </li>
-      <li class="page-item" :class="{ disabled: nextUrl === '' }">
-        <button class="page-link" @click="checkPage(nextUrl)">Next</button>
-      </li>
-    </ul>
+    <div class="text-center">
+      <v-pagination
+        next-icon="fal fa-angle-right"
+        prev-icon="fal fa-angle-left"
+        v-model="page"
+        :length="pages"
+        @input="checkPage"
+      ></v-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import Cards from "./Cards";
-import ProductsServices from "../services/products.service";
+import Cards from './Cards';
+import ProductsServices from '../services/products.service';
 export default {
   components: {
-    Cards,
+    Cards
   },
   data() {
     return {
       products: [],
-      currentPage: "",
-      pages: "",
-      prevUrl: "",
-      nextUrl: "",
+      currentPage: '',
+      page: 1,
+      pages: 0,
+      prevUrl: '',
+      nextUrl: ''
     };
   },
   created() {
     this.$store.state.toggle.isLoading = true;
     return ProductsServices.getProducts().then(
-      (response) => {
+      response => {
         this.products = response.data.products;
         this.currentPage = response.data.currentPage;
         this.pages = response.data.pages;
@@ -41,29 +42,33 @@ export default {
 
         this.$store.state.toggle.isLoading = false;
       },
-      (error) => {
+      error => {
         console.log(error);
       }
     );
   },
   methods: {
-    checkPage(url) {
+    checkPage() {
+      this.$store.state.toggle.isLoading = true;
+      this.$vuetify.goTo(0);
+      let url = `http://localhost:8080/api/products?page=${this.page - 1}`;
       return ProductsServices.getProductsByUrl(url).then(
-        (response) => {
+        response => {
           this.products = response.data.products;
           this.currentPage = response.data.currentPage;
           this.pages = response.data.pages;
           this.nextUrl = response.data.nextUrl;
           this.prevUrl = response.data.prevUrl;
+
+          this.$store.state.toggle.isLoading = false;
         },
-        (error) => {
+        error => {
           console.log(error);
         }
       );
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

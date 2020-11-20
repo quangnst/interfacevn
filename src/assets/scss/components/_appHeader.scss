@@ -5,10 +5,24 @@
             box-shadow: 0 4px 24px 2px rgba(119,121,122,.1) !important;
         }
         .v-icon, a {
-            color: #222 !important;
+            color: #828282 !important;
         }
-        .router-link-exact-active {
-            color: #2dd4bd !important;
+    }
+
+    .header {
+        &__categories {
+            a {
+                color: #828282 !important;
+                transition: all ease .5s;
+
+                &:hover {
+                    color: #000 !important;
+                }
+
+                &.router-link-active {
+                    color: #2dd4bd !important;
+                }
+            }
         }
     }
 }

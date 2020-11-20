@@ -1,5 +1,5 @@
 <template>
-  <v-overlay color="white" opacity=".9" :value="isLoading">
+  <v-overlay color="white" opacity=".96" :value="isLoading">
     <v-img width="40" height="20" src="../assets/img/loading.svg" />
   </v-overlay>
   <!-- Loading -->

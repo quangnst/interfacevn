@@ -4,7 +4,7 @@
       <v-col cols="12" md="5">
         <v-card
           flat
-          max-width="400"
+          max-width="420"
           color="rgba(255,255,255,.8)"
           rounded="xl"
           class="pa-12 mx-auto"

@@ -4,7 +4,7 @@
     app
     color="white"
     light
-    height="70"
+    height="75"
     v-if="currentUser"
   >
     <v-toolbar-title>
@@ -16,12 +16,12 @@
     <template v-if="showAdminBoard">
       <router-link to="/admin" class="nav-link">Admin Board</router-link>
     </template>
-    <div >
+    <div class="header__categories">
       <router-link
         v-for="category in categories"
         :key="category._id"
         :to="{ name: 'category', params: { category: category.title } }"
-        class="mx-4 text-decoration-none"
+        class="mx-6 text-decoration-none font-weight-medium"
         >{{ category.title }}</router-link
       >
     </div>
