@@ -1,25 +1,55 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-8">
-        <img :src="product.image" :alt="product.name" class="img-fluid" />
-        <h5>{{ product.name }}</h5>
-        <p>
-          <span class="font-weight-bold">Category</span>: {{ product.category }}
-        </p>
-        <p class="text-danger font-weight-bold">${{ product.price }}</p>
-        <p>
-          {{ product.description }}
-        </p>
-        <button
-          class="btn btn-outline-primary mb-5"
-          @click="addToCart(product)"
-        >
-          Buy Now
-        </button>
+  <div class="products__detail">
+    <v-container fill-height>
+      <div class="row">
+        <div class="col-md-5 col-sm-5 col-xs-12">
+          <v-carousel height="700">
+            <v-carousel-item :src="product.image"> </v-carousel-item>
+            <v-carousel-item :src="product.image"> </v-carousel-item>
+            <v-carousel-item :src="product.image"> </v-carousel-item>
+            <v-carousel-item :src="product.image"> </v-carousel-item>
+          </v-carousel>
+        </div>
+        <div class="col-md-7 col-sm-7 col-xs-12">
+          <div class="pl-6">
+            <p class="display-1 mb-0">{{ product.name }}</p>
+            <v-card-actions class="pa-0">
+              <p class="headline font-weight-light pt-3">
+                ${{ product.price }}
+              </p>
+              <v-spacer></v-spacer>
+              <v-rating
+                class=""
+                background-color="warning lighten-3"
+                color="warning"
+                dense
+              ></v-rating>
+            </v-card-actions>
+            <p class="subtitle-1 font-weight-thin">
+              {{ product.description }}
+            </p>
+            <p class="title">SIZE</p>
+            <v-radio-group>
+              <v-radio label="XS" value="XS"></v-radio>
+              <v-radio label="S" value="s"></v-radio>
+              <v-radio label="M" value="m"></v-radio>
+              <v-radio label="L" value="l"></v-radio>
+              <v-radio label="XL" value="xl"></v-radio>
+            </v-radio-group>
+            
+            <v-btn
+              class="primary white--text"
+              outlined
+              tile
+              dense
+              @click="addToCart(product)"
+              ><v-icon class="mr-2">fal fa-cart-plus</v-icon> ADD TO CART</v-btn
+            >
+            <v-btn class="ml-4" outlined tile>ADD TO WISHLIST</v-btn>
+          </div>
+        </div>
       </div>
-    </div>
+    </v-container>
   </div>
 </template>
 

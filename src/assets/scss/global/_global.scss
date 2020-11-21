@@ -6,4 +6,9 @@ body {
     .full-width {
         width: 100%;
     }
+
+    .no-transition {
+        transition: none !important;
+        transform: none !important;
+    }
 }

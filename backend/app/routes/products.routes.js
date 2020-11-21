@@ -4,7 +4,7 @@ const router = express.Router();
 const Product = require('../models/product.model');
 
 router.get('/', function (req, res, next) {
-  let perPage = 6;
+  let perPage = 9;
   let page = parseInt(req.query.page) || 0;
   let pages = 0;
   let nextUrl = '';

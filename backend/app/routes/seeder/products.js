@@ -5,7 +5,7 @@ const Product = require('../../models/product.model');
 const Category = require('../../models/category.model');
 
 router.get('/', function (req, res, next) {
-    const categories = ["Baby", "Movies", "Shoes", "Books", "Electronics","Computers", "Kids"];
+    const categories = ["Watch", "Movies", "Shoes", "Books", "Electronics","Computers", "Kids"];
     for (let i = 0; i < 20; i++) {
         let product = new Product({
             name : faker.commerce.productName(),

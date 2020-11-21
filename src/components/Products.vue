@@ -5,6 +5,7 @@
       <v-pagination
         next-icon="fal fa-angle-right"
         prev-icon="fal fa-angle-left"
+        elevation="0"
         v-model="page"
         :length="pages"
         @input="checkPage"

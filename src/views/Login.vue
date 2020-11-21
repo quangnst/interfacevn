@@ -9,7 +9,8 @@
           rounded="xl"
           class="pa-12 mx-auto"
         >
-          <img class="logo" src="../assets/img/logo.png" />
+          <v-img max-width="200" class="logo mb-2" src="../assets/img/logo.png"
+      ></v-img>
 
           <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
           <v-form name="form" @submit.prevent="handleLogin">

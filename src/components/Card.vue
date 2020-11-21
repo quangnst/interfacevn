@@ -1,49 +1,60 @@
 <template>
-  <v-card class="card mx-2" max-width="374">
-    <router-link tag="a" :to="{ name: 'product', params: { id: product._id } }">
+  <v-card class="card mx-2 pb-4" max-width="374">
+    <router-link :to="{ name: 'product', params: { id: product._id } }">
       <v-img
         class="card__image"
         :src="product.image"
         :alt="product.name"
       ></v-img>
     </router-link>
-    <v-card-title class="card__title">{{ product.name }}</v-card-title>
-
-    <v-card-text>
+    <v-card-title class="pb-0">
+      <router-link
+        class="text-decoration-none"
+        :to="{ name: 'product', params: { id: product._id } }"
+      >
+        <span class="card__title pb-0 subtitle-1">{{ product.name }}</span>
+      </router-link>
+      <v-spacer />
+      <span class="card__price card-text text-danger mb-0 body">
+        ${{ product.price }}
+      </span>
+    </v-card-title>
+    <v-card-text class="py-1">
       <v-row align="center" class="mx-0">
-        <v-rating
-          empty-icon="fal fa-star"
-          full-icon="fas fa-star"
-          half-icon="fal fa-star-half"
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
+        <v-col cols="12" class="pa-0"> </v-col>
 
-        <div class="card__rating grey--text ml-4">
-          4.5 (413)
-        </div>
+        <v-col cols="12" class="d-flex pa-0 pb-3">
+          <v-rating
+            empty-icon="fal fa-star"
+            full-icon="fas fa-star"
+            half-icon="fal fa-star-half"
+            :value="4.5"
+            color="amber"
+            dense
+            half-increments
+            readonly
+            size="14"
+          ></v-rating>
+
+          <div class="card__rating grey--text ml-4">
+            4.5 (413)
+          </div>
+        </v-col>
       </v-row>
 
-      <div class="card__category my-4 subtitle-1">
-        Category: {{ product.category }}
-      </div>
-
-      <div class="card__desc">{{ product.description.substring(0, 50) }}</div>
-
-      <p class="card__price card-text text-danger">${{ product.price }}</p>
+      <!-- <div class="card__desc my-2 subtitle-1">
+        {{ product.description.substring(0, 50) }}
+      </div> -->
     </v-card-text>
-    <v-card-actions>
-      <router-link
-        class=""
-        :to="{ name: 'product', params: { id: product._id } }"
-        >Desciption</router-link
+    <v-card-actions class="pt-0">
+      <v-btn
+        small
+        elevation="0"
+        outlined
+        class="mx-2"
+        @click="addToCart(product)"
       >
-      <v-btn class="" @click="addToCart(product)">
-        Buy Now
+        Add to cart
       </v-btn>
     </v-card-actions>
   </v-card>

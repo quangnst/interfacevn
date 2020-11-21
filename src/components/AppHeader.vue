@@ -9,8 +9,8 @@
   >
     <v-toolbar-title>
       <router-link to="/"
-        ><img class="logo pa-2 pb-0" src="../assets/img/logo.png"
-      /></router-link>
+        ><v-img max-width="160" class="logo ma-2 pb-0" src="../assets/img/logo.png"
+      ></v-img></router-link>
     </v-toolbar-title>
     <v-spacer />
     <template v-if="showAdminBoard">
@@ -21,7 +21,7 @@
         v-for="category in categories"
         :key="category._id"
         :to="{ name: 'category', params: { category: category.title } }"
-        class="mx-6 text-decoration-none font-weight-medium"
+        class="mx-5 text-decoration-none text-uppercase font-weight-medium"
         >{{ category.title }}</router-link
       >
     </div>
