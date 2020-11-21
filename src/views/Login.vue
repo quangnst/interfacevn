@@ -18,7 +18,6 @@
               <v-col cols="12">
                 <v-btn
                   type="submit"
-                  :loading="loading"
                   min-width="230"
                   elevation="0"
                   x-large

@@ -1,15 +1,11 @@
 <template>
   <div class="container">
-    <v-card class="card mx-auto pa-8 no-transition mt-3" max-width="1000">
+    <v-card class="card mx-auto pa-md-8 no-transition mt-3" max-width="1000">
       <header class="jumbotron">
         <h3>
           <strong>{{currentUser.username}}</strong> Profile
         </h3>
       </header>
-      <p>
-        <strong>Token:</strong>
-        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-      </p>
       <p>
         <strong>Id:</strong>
         {{currentUser.id}}

@@ -6,7 +6,7 @@
           <h3 class="text-center text-danger">Your Cart is Empty !</h3>
         </div>
         <div v-else>
-          <v-card class="card mx-auto pa-8 no-transition" max-width="1000">
+          <v-card class="card mx-auto pa-md-8 no-transition" max-width="1000">
             <v-simple-table>
               <template v-slot:default>
                 <thead>
@@ -52,7 +52,7 @@
                 </tbody>
               </template>
             </v-simple-table>
-            <div class="text-right">
+            <div class="text-right pa-2">
               <h4>Total: ${{ total }}</h4>
               <v-btn
                 class="primary white--text mt-2"

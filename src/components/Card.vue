@@ -1,5 +1,5 @@
 <template>
-  <v-card class="card mx-2 pb-4" max-width="374">
+  <v-card class="card mx-md-2 pb-4">
     <router-link :to="{ name: 'product', params: { id: product._id } }">
       <v-img
         class="card__image"
@@ -9,21 +9,18 @@
     </router-link>
     <v-card-title class="pb-0">
       <router-link
-        class="text-decoration-none"
+        class="text-decoration-none mr-auto"
         :to="{ name: 'product', params: { id: product._id } }"
       >
         <span class="card__title pb-0 subtitle-1">{{ product.name }}</span>
       </router-link>
-      <v-spacer />
       <span class="card__price card-text text-danger mb-0 body">
         ${{ product.price }}
       </span>
     </v-card-title>
     <v-card-text class="py-1">
       <v-row align="center" class="mx-0">
-        <v-col cols="12" class="pa-0"> </v-col>
-
-        <v-col cols="12" class="d-flex pa-0 pb-3">
+        <v-col cols="12" class="d-flex flex-wrap pa-0 pb-3">
           <v-rating
             empty-icon="fal fa-star"
             full-icon="fas fa-star"
@@ -34,9 +31,10 @@
             half-increments
             readonly
             size="14"
+            class="mr-4"
           ></v-rating>
 
-          <div class="card__rating grey--text ml-4">
+          <div class="card__rating grey--text">
             4.5 (413)
           </div>
         </v-col>

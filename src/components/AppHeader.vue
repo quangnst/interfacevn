@@ -4,7 +4,7 @@
     app
     color="white"
     light
-    height="75"
+    height="82"
     v-if="currentUser"
   >
     <v-toolbar-title>
@@ -16,13 +16,13 @@
     <template v-if="showAdminBoard">
       <router-link to="/admin" class="nav-link">Admin Board</router-link>
     </template>
-    <div class="header__categories">
+    <div class="header__categories hidden-md-and-down d-md-flex">
       <router-link
         v-for="category in categories"
         :key="category._id"
         :to="{ name: 'category', params: { category: category.title } }"
-        class="mx-5 text-decoration-none text-uppercase font-weight-medium"
-        >{{ category.title }}</router-link
+        class="mx-5 pt-2 text-decoration-none text-uppercase font-weight-medium d-inline-flex flex-column align-center"
+        ><v-icon size="18" class="mb-2">{{category.icon}}</v-icon>{{ category.title }}</router-link
       >
     </div>
     <v-spacer />
@@ -43,10 +43,10 @@
         </v-badge>
       </router-link>
 
-      <router-link to="/profile" class="mx-4">
+      <router-link to="/profile" class="px-4">
         <v-icon>fal fa-user</v-icon>
       </router-link>
-      <v-btn text class="mx-4" href @click.prevent="logOut">
+      <v-btn text class="px-4" href @click.prevent="logOut">
         <v-icon>fal fa-sign-out-alt</v-icon>
       </v-btn>
     </template>

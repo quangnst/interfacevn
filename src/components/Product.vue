@@ -11,7 +11,7 @@
           </v-carousel>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
-          <div class="pl-6">
+          <div class="pl-md-6">
             <p class="display-1 mb-0">{{ product.name }}</p>
             <v-card-actions class="pa-0">
               <p class="headline font-weight-light pt-3">

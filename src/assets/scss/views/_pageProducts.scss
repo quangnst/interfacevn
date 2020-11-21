@@ -27,6 +27,11 @@
   &__price {
     color: #999;
   }
+  &__title {
+    line-height: 1.5 !important;
+    display: inline-block;
+    word-break: break-word;
+  }
 
   &:hover {
     transform: scale(1.08);
