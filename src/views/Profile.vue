@@ -1,30 +1,105 @@
 <template>
   <div class="container">
-    <v-card class="card mx-auto pa-md-8 no-transition mt-3" max-width="1000">
-      <header class="jumbotron">
-        <h3>
-          <strong>{{currentUser.username}}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Id:</strong>
-        {{currentUser.id}}
-      </p>
-      <p>
-        <strong>Email:</strong>
-        {{currentUser.email}}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-      </ul>
+    <v-card class="card mx-auto pa-md-8 no-transition mt-3" max-width="800">
+      <v-form name="form" @submit.prevent="handleUpdate">
+        <v-row>
+          <v-col cols="12" class="pb-0">
+            <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
+            <v-avatar size="80">
+              <img
+                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                alt="John"
+              >
+            </v-avatar>
+          </v-col>
+          <v-col cols="12" class="pb-0">
+            <label for="username" class="mb-2 subtitle-2">Name</label>
+            <v-text-field
+              v-model="currentUser.username"
+              v-validate="'required'"
+              flat
+              outlined
+              :elevation="0"
+              required
+              hide-details
+              class="rounded-lg"
+              name="username"
+            ></v-text-field>
+            <div
+              v-if="errors.has('username')"
+              class="alert alert-danger"
+              role="alert"
+            >
+              Username is required!
+            </div>
+          </v-col>
+          <v-col cols="12" class="pb-0">
+            <label for="phone" class="mb-2 subtitle-2">Phone</label>
+            <v-text-field
+              v-model="user.phone"
+              flat
+              outlined
+              :elevation="0"
+              required
+              hide-details
+              class="rounded-lg"
+              name="phone"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" class="pb-0">
+            <label for="email" class="mb-2 subtitle-2">Email</label>
+            <v-text-field
+              v-model="currentUser.email"
+              flat
+              outlined
+              :elevation="0"
+              required
+              hide-details
+              class="rounded-lg"
+              name="email"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" class="pb-0">
+            <label for="password" class="mb-2 subtitle-2">Password</label>
+            <v-text-field
+              v-model="user.password"
+              flat
+              outlined
+              :elevation="0"
+              required
+              hide-details
+              class="rounded-lg"
+              name="password"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <div class="text-right">
+              <v-btn
+                class="primary white--text mt-2"
+                tile
+                dense
+                type="submit"
+              >
+                Update
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-form>
     </v-card>
   </div>
 </template>
 
 <script>
+import User from '../models/user';
+
 export default {
   name: 'Profile',
+  data() {
+    return {
+      user: new User('', '')
+    };
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
