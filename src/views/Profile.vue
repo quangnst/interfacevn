@@ -101,8 +101,9 @@ export default {
   methods:{
     handleUpdateUser(){
       let newUser = {
-        id: this.currentUser.id,
-        username: this.currentUser.username
+        _id: this.currentUser._id,
+        username: this.currentUser.username,
+        phone: this.currentUser.phone
       }
       return UserServices.updateUser(newUser).then(
         (response) => {

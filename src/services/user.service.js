@@ -25,7 +25,7 @@ class UserService {
   }
 
   updateUser(user) {
-    return axios.put(API_URL + `user/${user.id}`, user);
+    return axios.put(API_URL + `user/${user._id}`, user);
   }
 }
 

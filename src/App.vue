@@ -1,6 +1,6 @@
 <template>
   <v-app class="interface-app" :class="[$router.currentRoute.name + '-page']">
-    <AppHeader />
+    <AppHeader v-if="user"/>
 
     <Loading :isLoading="isLoading" />
     <v-main>
@@ -23,7 +23,8 @@ export default {
   },
   computed: {
       ...mapState({
-        isLoading: state => state.toggle.isLoading
+        isLoading: state => state.toggle.isLoading,
+        user: state => state.auth.user
       }),
   },
 
