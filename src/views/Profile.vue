@@ -59,19 +59,6 @@
               name="email"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" class="pb-0">
-            <label for="password" class="mb-2 subtitle-2">Password</label>
-            <v-text-field
-              v-model="currentUser.password"
-              flat
-              outlined
-              :elevation="0"
-              required
-              hide-details
-              class="rounded-lg"
-              name="password"
-            ></v-text-field>
-          </v-col>
           <v-col cols="12">
             <div class="text-right">
               <v-btn

@@ -65,9 +65,11 @@ export default {
     };
   },
   created() {
+    this.$store.state.toggle.isLoading = true;
     return ProductsServices.getProductsById(this.id).then(
       (response) => {
         this.product = response.data;
+        this.$store.state.toggle.isLoading = false;
       },
       (error) => {
         console.log(error);
@@ -78,7 +80,6 @@ export default {
     checkout(e) {
       e.preventDefault();
       this.$router.push({ name: "checkout" });
-      console.log(e);
     },
   },
 };
