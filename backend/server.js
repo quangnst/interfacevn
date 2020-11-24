@@ -4,7 +4,6 @@ const cors = require("cors");
 const database = require("./app/config/db.config");
 const seeder = require('./app/routes/seeder/products');
 
-const products = require('./app/routes/products.routes');
 const categories = require('./app/routes/categories.routes');
 
 const app = express();
@@ -24,7 +23,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes Product
-app.use('/api/products', products);
 app.use('/api/categories', categories);
 
 const db = require("./app/models");
@@ -32,15 +30,16 @@ const Role = db.role;
 
 db.mongoose
   .connect(database.db, {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
   .then(() => {
-    console.log("Successfully connect to MongoDB.");
+    console.log('Successfully connect to MongoDB.');
     initial();
   })
   .catch(err => {
-    console.error("Connection error", err);
+    console.error('Connection error', err);
     process.exit();
   });
 
@@ -52,6 +51,7 @@ app.get("/", (req, res) => {
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require('./app/routes/products.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

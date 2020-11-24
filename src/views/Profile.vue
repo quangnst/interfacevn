@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-card class="card mx-auto pa-md-8 no-transition mt-3" max-width="800">
-      <v-form name="form" @submit.prevent="handleUpdate">
+      <v-form name="form" @submit.prevent="handleUpdateUser">
         <v-row>
           <v-col cols="12" class="pb-0">
             <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
@@ -36,7 +36,7 @@
           <v-col cols="12" class="pb-0">
             <label for="phone" class="mb-2 subtitle-2">Phone</label>
             <v-text-field
-              v-model="user.phone"
+              v-model="currentUser.phone"
               flat
               outlined
               :elevation="0"
@@ -62,7 +62,7 @@
           <v-col cols="12" class="pb-0">
             <label for="password" class="mb-2 subtitle-2">Password</label>
             <v-text-field
-              v-model="user.password"
+              v-model="currentUser.password"
               flat
               outlined
               :elevation="0"
@@ -82,6 +82,7 @@
               >
                 Update
               </v-btn>
+              {{currentUser}}
             </div>
           </v-col>
         </v-row>
@@ -91,14 +92,14 @@
 </template>
 
 <script>
-import User from '../models/user';
+import UserServices from "../services/user.service";
 
 export default {
   name: 'Profile',
-  data() {
+  data(){
     return {
-      user: new User('', '')
-    };
+      
+    }
   },
   computed: {
     currentUser() {
@@ -108,6 +109,22 @@ export default {
   mounted() {
     if (!this.currentUser) {
       this.$router.push('/login');
+    }
+  },
+  methods:{
+    handleUpdateUser(){
+      let newUser = {
+        id: this.currentUser.id,
+        username: this.currentUser.username
+      }
+      return UserServices.updateUser(newUser).then(
+        (response) => {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 };

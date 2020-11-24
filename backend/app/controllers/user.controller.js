@@ -1,3 +1,5 @@
+const User = require('../models/user.model');
+
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
 };
@@ -19,4 +21,23 @@ exports.profileBoard = (req, res) => {
     success: true,
     message: 'A list of all course'
   });
+};
+
+exports.getUserById = (req, res) => {
+  User.findById(req.params.id, function(err, product) {
+    if (err) return console.log(err);
+    res.status(200).json(product);
+  });
+};
+
+exports.updateUserById = (req, res) => {
+  User.findByIdAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true },
+    (err, user) => {
+      if (err) res.send(err);
+      res.status(200).json(user);
+    }
+  );
 };

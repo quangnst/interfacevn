@@ -30,4 +30,7 @@ module.exports = function(app) {
     "/api/test/profile",
     controller.profileBoard
   );
+
+  app.get('/api/user/:id', controller.getUserById);
+  app.put('/api/user/:id', controller.updateUserById);
 };
