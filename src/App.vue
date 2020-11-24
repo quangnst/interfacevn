@@ -3,6 +3,7 @@
     <AppHeader v-if="user"/>
 
     <Loading :isLoading="isLoading" />
+    <SnackBar />
     <v-main>
       <router-view />
     </v-main>
@@ -13,13 +14,15 @@
 import { mapState } from "vuex";
 import AppHeader from './components/AppHeader';
 import Loading from './components/Loading';
+import SnackBar from './components/SnackBar';
 
 export default {
   name: 'App',
 
   components: {
     AppHeader,
-    Loading
+    Loading,
+    SnackBar
   },
   computed: {
       ...mapState({

@@ -69,7 +69,6 @@
               >
                 Update
               </v-btn>
-              {{currentUser}}
             </div>
           </v-col>
         </v-row>
@@ -80,6 +79,7 @@
 
 <script>
 import UserServices from "../services/user.service";
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Profile',
@@ -99,6 +99,7 @@ export default {
     }
   },
   methods:{
+    ...mapActions('snackbar', ['showSnack']),
     handleUpdateUser(){
       let newUser = {
         _id: this.currentUser._id,
@@ -108,6 +109,12 @@ export default {
       return UserServices.updateUser(newUser).then(
         (response) => {
           localStorage.setItem('user', JSON.stringify(response.data));
+
+          this.showSnack({
+            text: 'Profile Updated!',
+            color: 'success',
+            timeout: 3500
+          });
         },
         (error) => {
           console.log(error);

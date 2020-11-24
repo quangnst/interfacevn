@@ -62,7 +62,10 @@
 import mixins from '@/mixins/mixins';
 export default {
   props: ['product'],
-  mixins: [mixins]
+  mixins: [mixins],
+  methods: {
+   
+  }
 };
 </script>
 
