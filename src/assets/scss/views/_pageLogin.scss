@@ -1,8 +1,13 @@
-.login, .register {
-
+.login,
+.register {
   &-page {
     &.theme--light {
-      background: url('../img/bg.jpg') no-repeat center;
+      background: rgb(254, 143, 28);
+      background: linear-gradient(
+        119deg,
+        rgba(254, 143, 28, 1) 0%,
+        rgba(255, 161, 35, 1) 100%
+      );
       background-size: cover;
     }
   }
