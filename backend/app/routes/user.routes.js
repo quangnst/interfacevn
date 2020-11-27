@@ -33,4 +33,6 @@ module.exports = function(app) {
 
   app.get('/api/user/:id', controller.getUserById);
   app.put('/api/user/:id', controller.updateUserById);
+
+  app.post('/api/user/upload', controller.upload);
 };

@@ -8,6 +8,8 @@ const categories = require('./app/routes/categories.routes');
 
 const app = express();
 
+global.__basedir = __dirname;
+
 var corsOptions = {
   origin: "http://localhost:3000"
 };
