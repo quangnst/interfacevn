@@ -4,6 +4,7 @@
       <v-form name="form" @submit.prevent="handleUpdateUser">
         <v-row>
           <v-col cols="12" class="pb-0">
+            <upload-images></upload-images>
             <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
             <v-avatar size="80">
               <img
@@ -79,10 +80,14 @@
 
 <script>
 import UserServices from "../services/user.service";
+import UploadImages from "../components/UploadImages";
 import { mapActions } from 'vuex';
 
 export default {
   name: 'Profile',
+  components: {
+    UploadImages,
+  },
   data(){
     return {
       
