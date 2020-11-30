@@ -9,7 +9,12 @@ exports.upload = async(req, res) => {
       return res.status(400).send({ message: 'Please upload a file!' });
     }
 
+    let fileInfos = {
+      name: req.file.originalname,
+      url: baseUrl + req.file.originalname
+    };
     res.status(200).send({
+      fileInfos,
       message: 'Uploaded the file successfully: ' + req.file.originalname
     });
   } catch (err) {
@@ -20,7 +25,6 @@ exports.upload = async(req, res) => {
         message: 'File size cannot be larger than 2MB!'
       });
     }
-
     res.status(500).send({
       message: `Could not upload the file: ${req.file.originalname}. ${err}`
     });
@@ -49,6 +53,7 @@ exports.getListFiles = async(req, res) => {
     res.status(200).send(fileInfos);
   });
 };
+
 
 exports.download = async(req, res) => {
   const fileName = req.params.name;

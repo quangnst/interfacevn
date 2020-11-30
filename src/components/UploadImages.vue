@@ -64,6 +64,7 @@
 import UploadService from "../services/upload.service";
 export default {
   name: "upload-images",
+  props: ['userId'],
   data() {
     return {
       selectedFiles: undefined,
@@ -79,13 +80,15 @@ export default {
     },
     upload(idx, file) {
       this.progressInfos[idx] = { percentage: 0, fileName: file.name };
-      UploadService.upload(file, (event) => {
+      UploadService.upload(file, this.userId, (event) => {
         this.progressInfos[idx].percentage = Math.round(100 * event.loaded / event.total);
       })
         .then((response) => {
           let prevMessage = this.message ? this.message + "\n" : "";
           this.message = prevMessage + response.data.message;
-          return UploadService.getFiles();
+          console.log(response)
+          this.$emit('handleUpdateUser', response.data.fileInfos.url);
+          // return UploadService.getFiles();
         })
         .then((files) => {
           this.fileInfos = files.data;
@@ -102,10 +105,15 @@ export default {
       }
     }
   },
+  computed: {
+    userAvatar(){
+      return `${this.id}_avatar`
+    }
+  },
   mounted() {
-    UploadService.getFiles().then((response) => {
-      this.fileInfos = response.data;
-    });
+    // UploadService.getFiles().then((response) => {
+    //   this.fileInfos = response.data;
+    // });
   },
 };
 </script>

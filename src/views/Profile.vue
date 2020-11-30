@@ -4,14 +4,15 @@
       <v-form name="form" @submit.prevent="handleUpdateUser">
         <v-row>
           <v-col cols="12" class="pb-0">
-            <upload-images></upload-images>
+            <upload-images @handleUpdateUser="handleUpdateUser" :userId="currentUser._id"></upload-images>
             <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
-            <v-avatar size="80">
+            <v-avatar size="80" v-if="this.currentUser.files || avatar">
               <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                :src="avatar ? avatar : this.currentUser.files"
                 alt="John"
               >
             </v-avatar>
+            avatar {{avatar}}
           </v-col>
           <v-col cols="12" class="pb-0">
             <label for="username" class="mb-2 subtitle-2">Name</label>
@@ -90,7 +91,7 @@ export default {
   },
   data(){
     return {
-      
+      avatar: null
     }
   },
   computed: {
@@ -105,11 +106,14 @@ export default {
   },
   methods:{
     ...mapActions('snackbar', ['showSnack']),
-    handleUpdateUser(){
+    handleUpdateUser(userAvatar){
+      console.log(userAvatar)
+      this.avatar = userAvatar;
       let newUser = {
         _id: this.currentUser._id,
         username: this.currentUser.username,
-        phone: this.currentUser.phone
+        phone: this.currentUser.phone,
+        files: userAvatar ? userAvatar : this.currentUser.files
       }
       return UserServices.updateUser(newUser).then(
         (response) => {
