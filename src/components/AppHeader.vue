@@ -61,7 +61,6 @@
         </template>
       </div>
       <v-text-field
-        outlined
         append-icon="fal fa-search fa-small"
         hide-details
         height="40"
