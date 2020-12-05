@@ -1,6 +1,8 @@
 .theme--light {
     header {
         z-index: 99 !important;
+        display: flex;
+        flex-direction: column-reverse;
         &.v-toolbar {
             box-shadow: 0 4px 24px 2px rgba(119,121,122,.1) !important;
         }
@@ -21,6 +23,19 @@
 
                 &.router-link-active {
                     color: #2dd4bd !important;
+                }
+            }
+        }
+
+        &__search {
+            max-width: 200px;
+            .v-input {
+                &__slot {
+                    min-height: auto;
+                }
+
+                &__append-inner {
+                    margin-top: 9px;
                 }
             }
         }

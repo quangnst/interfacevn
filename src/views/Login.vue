@@ -105,8 +105,8 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="7">
-        <v-img max-width="400" class="mx-auto mb-2" src="../assets/img/hamburger.png"
-      ></v-img>
+        <!-- <v-img max-width="400" class="mx-auto mb-2" src="../assets/img/hamburger.png"
+      ></v-img> -->
       </v-col>
     </v-row>
   </v-container>

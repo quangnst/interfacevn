@@ -8,6 +8,10 @@
         rgba(254, 143, 28, 1) 0%,
         rgba(255, 161, 35, 1) 100%
       );
+      background: linear-gradient(red, transparent),
+        linear-gradient(to top left, #3ffe1c, transparent),
+        linear-gradient(to top right, #3300ff, transparent);
+      background-blend-mode: screen;
       background-size: cover;
     }
   }

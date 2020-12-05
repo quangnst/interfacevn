@@ -4,13 +4,17 @@
     app
     color="white"
     light
-    height="82"
+    height="90"
     v-if="currentUser"
   >
     <v-toolbar-title>
       <router-link to="/"
-        ><v-img max-width="160" class="logo ma-2 pb-0" src="../assets/img/logo.png"
-      ></v-img></router-link>
+        ><v-img
+          max-width="160"
+          class="logo ma-2 pb-0"
+          src="../assets/img/logo.png"
+        ></v-img
+      ></router-link>
     </v-toolbar-title>
     <v-spacer />
     <template v-if="showAdminBoard">
@@ -21,35 +25,50 @@
         v-for="category in categories"
         :key="category._id"
         :to="{ name: 'category', params: { category: category.title } }"
-        class="mx-5 pt-2 text-decoration-none text-uppercase font-weight-medium d-inline-flex flex-column align-center"
-        ><v-icon size="18" class="mb-2">{{category.icon}}</v-icon>{{ category.title }}</router-link
+        class="mx-5 text-decoration-none text-uppercase font-weight-medium d-inline-flex flex-column align-center"
+        ><v-icon size="18" class="mb-2">{{ category.icon }}</v-icon
+        >{{ category.title }}</router-link
       >
     </div>
     <v-spacer />
+    <div class="d-flex flex-column">
+      <div class="text-right">
+        <template v-if="!currentUser">
+          <router-link to="/register" class="nav-link mx-4">
+            Sign Up
+          </router-link>
+          <router-link to="/login" class="nav-link mx-4"> Login </router-link>
+        </template>
 
-    <template v-if="!currentUser">
-      <router-link to="/register" class="nav-link mx-4"> Sign Up </router-link>
-      <router-link to="/login" class="nav-link mx-4"> Login </router-link>
-    </template>
+        <template v-if="currentUser" class="navbar-nav ml-auto">
+          <router-link :to="{ name: 'checkout' }" class="px-2">
+            <v-badge
+              :content="cart.length"
+              :color="cart.length > 0 ? 'primary' : 'transparent'"
+              overlap
+            >
+              <v-icon small>fal fa-shopping-cart</v-icon>
+            </v-badge>
+          </router-link>
 
-    <template v-if="currentUser" class="navbar-nav ml-auto">
-      <router-link :to="{ name: 'checkout' }" class="mr-1 ml-4">
-        <v-badge
-          :content="cart.length"
-          :color="cart.length > 0 ? 'primary' : 'transparent'"
-          overlap
-        >
-          <v-icon>fal fa-shopping-cart</v-icon>
-        </v-badge>
-      </router-link>
+          <router-link to="/profile" class="px-2">
+            <v-icon small>fal fa-user</v-icon>
+          </router-link>
 
-      <router-link to="/profile" class="px-4">
-        <v-icon>fal fa-user</v-icon>
-      </router-link>
-      <v-btn text class="px-4" href @click.prevent="logOut">
-        <v-icon>fal fa-sign-out-alt</v-icon>
-      </v-btn>
-    </template>
+          <router-link to="/profile" class="px-2 pr-0" @click.native="logOut">
+            <v-icon small>fal fa-sign-out-alt</v-icon>
+          </router-link>
+        </template>
+      </div>
+      <v-text-field
+        outlined
+        append-icon="fal fa-search fa-small"
+        hide-details
+        height="40"
+        placeholder="Search products"
+        class="header__search mt-2"
+      ></v-text-field>
+    </div>
   </v-app-bar>
 </template>
 
