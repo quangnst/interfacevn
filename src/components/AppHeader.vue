@@ -66,6 +66,8 @@
         height="40"
         placeholder="Search products"
         class="header__search mt-2"
+        v-model="searchKey"
+        @click:append="search"
       ></v-text-field>
     </div>
   </v-app-bar>
@@ -76,7 +78,8 @@ import CategoriesServices from '../services/categories.service';
 export default {
   data() {
     return {
-      categories: []
+      categories: [],
+      searchKey: '',
     };
   },
   created() {
@@ -115,6 +118,9 @@ export default {
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
+    },
+    search(){
+      this.$router.push({ name: 'search', params: { key: this.searchKey } }).catch(err => { console.log(err)})
     }
   }
 };

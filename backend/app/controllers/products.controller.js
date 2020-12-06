@@ -4,10 +4,13 @@ exports.getAllProduct = (req, res) => {
   let perPage = 9;
   let page = parseInt(req.query.page) || 0;
   let pages = 0;
-  let nextUrl = '';
-  let prevUrl = '';
+
+  let name = req.query.name;
+  let condition = name
+    ? { name: { $regex: new RegExp(name), $options: 'i' } }
+    : {};
   Product.count().exec(function(err, count) {
-    Product.find()
+    Product.find(condition)
       .limit(perPage)
       .skip(perPage * page)
       .exec(function(err, products) {
