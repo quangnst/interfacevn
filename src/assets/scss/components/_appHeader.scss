@@ -19,10 +19,18 @@
 
                 &:hover {
                     color: #000 !important;
+
+                    .v-icon {
+                        color: #000 !important;
+                    }
                 }
 
                 &.router-link-active {
                     color: #2dd4bd !important;
+
+                    .v-icon {
+                        color: #2dd4bd !important;
+                    }
                 }
             }
         }

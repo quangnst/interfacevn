@@ -46,6 +46,7 @@
               :content="cart.length"
               :color="cart.length > 0 ? 'primary' : 'transparent'"
               overlap
+              offset-x="7"
             >
               <v-icon small>fal fa-shopping-cart</v-icon>
             </v-badge>
@@ -68,6 +69,7 @@
         class="header__search mt-2"
         v-model="searchKey"
         @click:append="search"
+        @keyup.enter="search"
       ></v-text-field>
     </div>
   </v-app-bar>
@@ -121,6 +123,7 @@ export default {
     },
     search(){
       this.$router.push({ name: 'search', params: { key: this.searchKey } }).catch(err => { console.log(err)})
+      this.searchKey = '';
     }
   }
 };

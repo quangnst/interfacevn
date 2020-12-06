@@ -42,13 +42,15 @@
                   class="rounded-lg"
                   name="username"
                 ></v-text-field>
-                <div
+                <v-alert
                   v-if="errors.has('username')"
-                  class="alert alert-danger"
-                  role="alert"
+                  outlined
+                  type="warning"
+                  border="left"
+                  class="mt-2 mb-1 py-2"
                 >
                   Username is required!
-                </div>
+                </v-alert>
               </v-col>
               <v-col cols="12" class="pb-0">
                 <label for="password" class="mb-2 subtitle-2">Password</label>
@@ -63,13 +65,15 @@
                   class="rounded-lg"
                   name="password"
                 ></v-text-field>
-                <div
+                <v-alert
                   v-if="errors.has('password')"
-                  class="alert alert-danger"
-                  role="alert"
+                  outlined
+                  type="warning"
+                  border="left"
+                  class="mt-2 mb-1 py-2"
                 >
                   Password is required!
-                </div>
+                </v-alert>
               </v-col>
               <v-col cols="12">
                 <v-btn
@@ -93,10 +97,15 @@
                   >
                 </div>
               </v-col>
-              <v-col cols="12" sm="6" v-if="message">
-                <div class="alert alert-danger" role="alert">
+              <v-col cols="12" v-if="message">
+                <v-alert
+                  outlined
+                  type="warning"
+                  border="left"
+                  class="mt-2 mb-1 py-2"
+                >
                   {{ message }}
-                </div>
+                </v-alert>
               </v-col>
             </v-row>
           </v-form>
