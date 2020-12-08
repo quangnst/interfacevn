@@ -4,15 +4,7 @@
       <v-form name="form" @submit.prevent="handleUpdateUser">
         <v-row>
           <v-col cols="12" class="pb-0">
-            <upload-images @handleUpdateUser="handleUpdateUser" :userId="currentUser._id"></upload-images>
-            <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
-            <v-avatar size="80" v-if="this.currentUser.files || avatar">
-              <img
-                :src="avatar ? avatar : this.currentUser.files"
-                alt="John"
-              >
-            </v-avatar>
-            avatar {{avatar}}
+            <upload-images></upload-images>
           </v-col>
           <v-col cols="12" class="pb-0">
             <label for="username" class="mb-2 subtitle-2">Name</label>
@@ -63,12 +55,7 @@
           </v-col>
           <v-col cols="12">
             <div class="text-right">
-              <v-btn
-                class="primary white--text mt-2"
-                tile
-                dense
-                type="submit"
-              >
+              <v-btn class="primary white--text mt-2" tile dense type="submit">
                 Update
               </v-btn>
             </div>
@@ -80,8 +67,8 @@
 </template>
 
 <script>
-import UserServices from "../services/user.service";
-import UploadImages from "../components/UploadImages";
+import UserServices from '../services/user.service';
+import UploadImages from '../components/UploadImages';
 import { mapActions } from 'vuex';
 
 export default {
@@ -89,32 +76,25 @@ export default {
   components: {
     UploadImages,
   },
-  data(){
-    return {
-      avatar: null
-    }
-  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   mounted() {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
   },
-  methods:{
+  methods: {
     ...mapActions('snackbar', ['showSnack']),
-    handleUpdateUser(userAvatar){
-      console.log(userAvatar)
-      this.avatar = userAvatar;
+    handleUpdateUser() {
       let newUser = {
         _id: this.currentUser._id,
         username: this.currentUser.username,
         phone: this.currentUser.phone,
-        files: userAvatar ? userAvatar : this.currentUser.files
-      }
+        files: this.currentUser.files,
+      };
       return UserServices.updateUser(newUser).then(
         (response) => {
           localStorage.setItem('user', JSON.stringify(response.data));
@@ -122,14 +102,14 @@ export default {
           this.showSnack({
             text: 'Profile Updated!',
             color: 'success',
-            timeout: 3500
+            timeout: 3500,
           });
         },
         (error) => {
           console.log(error);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>

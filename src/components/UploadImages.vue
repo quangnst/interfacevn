@@ -1,125 +1,130 @@
 <template>
   <div>
-    <div v-if="progressInfos">
-      <div class="mb-2"
-        v-for="(progressInfo, index) in progressInfos"
-        :key="index"
-      >
-        <span>{{progressInfo.fileName}}</span>
-        <v-progress-linear
-          v-model="progressInfo.percentage"
-          color="light-blue"
-          height="25"
-          reactive
-        >
-          <strong>{{ progressInfo.percentage }} %</strong>
-        </v-progress-linear>
-      </div>
-    </div>
-
     <v-row no-gutters justify="center" align="center">
       <v-col cols="8">
-        <v-file-input
-          accept="image/*"
-          multiple
-          show-size
-          label="Select Images"
-          @change="selectFiles"
-        ></v-file-input>
+        <label for="avatar" class="mb-2 d-block subtitle-2">Avatar</label>
+        <div
+          class="avatar"
+          @click="pickFile"
+          style="max-width: 100px; cursor: pointer"
+        >
+          <input
+            type="file"
+            style="display: none"
+            ref="image"
+            accept="image/*"
+            @change="onFilePicked"
+          />
+          <v-avatar size="80" v-if="this.currentUser.files || imageUrl">
+            <img :src="imageUrl ? imageUrl : this.currentUser.files" />
+          </v-avatar>
+          <v-avatar size="80" v-else color="indigo">
+            <v-icon dark large> fal fa-user </v-icon>
+          </v-avatar>
+        </div>
       </v-col>
 
       <v-col cols="4" class="pl-2">
-        <v-btn color="success" dark small @click="uploadFiles">
+        <v-btn
+          :disabled="!selectedFile"
+          color="success"
+          dark
+          small
+          @click="uploadFiles"
+        >
           Upload
-          <v-icon right dark>mdi-cloud-upload</v-icon>
+          <v-icon right dark>fal fa-upload</v-icon>
         </v-btn>
       </v-col>
     </v-row>
-
-    <v-alert v-if="message" border="left" color="teal" outlined class="multi-line">
-      {{ message }}
-    </v-alert>
-
-    <v-card v-if="fileInfos.length > 0" class="mx-auto">
-      <v-list>
-        <v-subheader>List of Images</v-subheader>
-        <v-list-item-group color="primary">
-            <v-list-item v-for="(file, index) in fileInfos" :key="index">
-              <v-list-item-content>
-                <v-list-item-title class="mb-3">
-                  <a :href="file.url">{{ file.name }}</a>
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  <img :src="file.url" :alt="file.name" height="80px">
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-card>
   </div>
 </template>
 
 <script>
-import UploadService from "../services/upload.service";
+import UserServices from '../services/user.service';
+import UploadService from '../services/upload.service';
+import { mapActions } from 'vuex';
 export default {
-  name: "upload-images",
-  props: ['userId'],
+  name: 'upload-images',
   data() {
     return {
-      selectedFiles: undefined,
-      progressInfos: [],
-      message: "",
-      fileInfos: [],
+      selectedFile: false,
+      imageFile: null,
+      imageUrl: null,
+      message: '',
     };
   },
   methods: {
-    selectFiles(files) {
-      this.progressInfos = [];
-      this.selectedFiles = files;
+    ...mapActions('snackbar', ['showSnack']),
+
+    pickFile() {
+      this.$refs.image.click();
     },
-    upload(idx, file) {
-      this.progressInfos[idx] = { percentage: 0, fileName: file.name };
-      UploadService.upload(file, this.userId, (event) => {
-        this.progressInfos[idx].percentage = Math.round(100 * event.loaded / event.total);
-      })
+    onFilePicked(event) {
+      // Preview image
+      const files = event.target.files;
+      if (files[0] !== undefined) {
+        const fr = new FileReader();
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result;
+          this.imageFile = files[0]; // this is an image file that can be sent to server...
+        });
+
+        this.selectedFile = true;
+      } else {
+        this.imageFile = null;
+        this.imageUrl = null;
+        this.selectedFile = false;
+      }
+    },
+    upload(file) {
+      UploadService.upload(file, this.currentUser._id)
         .then((response) => {
-          let prevMessage = this.message ? this.message + "\n" : "";
+          let prevMessage = this.message ? this.message + '\n' : '';
           this.message = prevMessage + response.data.message;
-          console.log(response)
-          this.$emit('handleUpdateUser', response.data.fileInfos.url);
+          this.selectedFile = false;
           // return UploadService.getFiles();
         })
-        .then((files) => {
-          this.fileInfos = files.data;
+        .then(() => {
+          let newUser = {
+            _id: this.currentUser._id,
+            username: this.currentUser.username,
+            phone: this.currentUser.phone,
+            files: this.imageUrl ? this.imageUrl : this.currentUser.files,
+          };
+          return UserServices.updateUser(newUser).then(
+            (response) => {
+              localStorage.setItem('user', JSON.stringify(response.data));
+
+              this.showSnack({
+                text: this.message,
+                color: 'success',
+                timeout: 3500,
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         })
         .catch(() => {
-          this.progressInfos[idx].percentage = 0;
-          this.message = "Could not upload the image:" + file.name;
+          this.message = 'Could not upload the image:' + file.name;
         });
     },
     uploadFiles() {
-      this.message = "";
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i]);
-      }
-    }
+      this.message = '';
+      this.upload(this.imageFile);
+    },
   },
   computed: {
-    userAvatar(){
-      return `${this.id}_avatar`
-    }
-  },
-  mounted() {
-    // UploadService.getFiles().then((response) => {
-    //   this.fileInfos = response.data;
-    // });
+    userAvatar() {
+      return `${this.id}_avatar`;
+    },
+
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
 };
 </script>
-
-<style>
-.multi-line {
-  white-space: pre-line;
-}
-</style>
