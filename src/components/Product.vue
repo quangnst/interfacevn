@@ -71,7 +71,7 @@
                       v-model="rating"
                     ></v-rating>
                   </v-col>
-                  <v-col cols="12" class="px-0">
+                  <v-col cols="12" class="px-0 pb-0">
                     <v-textarea
                       label="Comments*"
                       required
@@ -80,15 +80,14 @@
                       v-model="comments"
                     ></v-textarea>
                   </v-col>
+                  <v-col cols="12" class="pa-0 mt-1 text-right">
+                    <v-btn color="blue darken-1" text @click="sendComment">
+                      Send comment
+                    </v-btn>
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="sendComment">
-                Send comment
-              </v-btn>
-            </v-card-actions>
           </v-card>
           <v-list three-line>
             <template v-for="(item, index) in items">
@@ -180,7 +179,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    },
+    }
   },
   methods: {
     checkout(e) {
@@ -188,9 +187,9 @@ export default {
       this.$router.push({ name: 'checkout' });
     },
     sendComment() {
-		console.log(this.currentUser)
+      console.log(this.currentUser);
       let sendRating = {
-		user_id : this.currentUser._id,
+        user_id: this.currentUser._id,
         productId: this.id,
         rate: this.rating,
         comments: this.comments
