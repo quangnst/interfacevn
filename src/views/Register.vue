@@ -9,8 +9,11 @@
 					rounded="xl"
 					class="pa-12 mx-auto"
 				>
-					<v-img max-width="200" class="logo mb-2" src="../assets/img/logo.png"
-			></v-img>
+					<v-img
+						max-width="200"
+						class="logo mb-2"
+						src="../assets/img/logo.png"
+					></v-img>
 
 					<h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign Up</h3>
 					<v-form name="form" @submit.prevent="handleRegister">
@@ -76,7 +79,7 @@
 									class="rounded-lg"
 									name="password"
 								></v-text-field>
-								
+
 								<v-alert
 									v-if="errors.has('password')"
 									outlined
@@ -103,9 +106,10 @@
 									<span>Sign Up</span>
 								</v-btn>
 
-
 								<div class="text-right mt-2">
-									<router-link to="/login" class="text-decoration-none subtitle-2 black--text"
+									<router-link
+										to="/login"
+										class="text-decoration-none subtitle-2 black--text"
 										>Back to Login in</router-link
 									>
 								</div>

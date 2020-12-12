@@ -25,9 +25,9 @@ exports.profileBoard = (req, res) => {
 };
 
 exports.getUserById = (req, res) => {
-  User.findById(req.params.id, function(err, product) {
+  User.findById(req.params.id, function(err, user) {
     if (err) return console.log(err);
-    res.status(200).json(product);
+    res.status(200).json(user);
   });
 };
 
