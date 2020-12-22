@@ -1,5 +1,5 @@
 const Product = require('../models/product.model');
-const Rating = require('../models/rating.model');
+const Review = require('../models/review.model');
 
 exports.getAllProduct = (req, res) => {
   let perPage = 9;
@@ -51,28 +51,30 @@ exports.getAllProduct = (req, res) => {
 };
 
 exports.getProductById = (req, res) => {
-  Product.findById(req.params.id, function(err, product) {
-    if (err) return console.log(err);
-    res.status(200).json(product);
-  });
+  Product.findOne({ _id: req.params.id })
+    .populate('review')
+    .exec(function(err, product) {
+      if (err) return console.log(err);
+      res.status(200).json(product);
+    });
 };
 
-exports.ratingProduct = (req, res) => {
+exports.addReview = (req, res) => {
   console.log(req.body)
-  const newRating = new Rating({
+  const newReview = new Review({
     product_id: req.params.id,
     user_id: req.body.user_id,
-    rate: req.body.rate
+    review: req.body.review
   });
 
-  newRating.save((error, rating) => {
+  newReview.save((error, newReview) => {
     if (error) {
       console.log(error);
     }
     res.send({
-      product_id: rating.product_id,
-      user_id: rating.user_id,
-      rate: rating.rate
+      product_id: newReview.product_id,
+      user_id: newReview.user_id,
+      review: newReview.review
     });
   });
 };

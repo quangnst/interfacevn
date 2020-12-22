@@ -194,7 +194,7 @@ export default {
         rate: this.rating,
         comments: this.comments
       };
-      return ProductsServices.ratingProduct(sendRating).then(
+      return ProductsServices.addReview(sendRating).then(
         response => {
           console.log(response.data);
         },
