@@ -59,22 +59,31 @@ exports.getProductById = (req, res) => {
     });
 };
 
-exports.addReview = (req, res) => {
+exports.addReview = async (req, res) => {
   console.log(req.body)
   const newReview = new Review({
     product_id: req.params.id,
-    user_id: req.body.user_id,
-    review: req.body.review
+    owner_name: req.body.owner_name,
+    owner_avatar: req.body.owner_avatar,
+    star: req.body.star,
+    comment: req.body.comment
   });
 
-  newReview.save((error, newReview) => {
+  await newReview.save((error, newReview) => {
     if (error) {
       console.log(error);
     }
     res.send({
       product_id: newReview.product_id,
-      user_id: newReview.user_id,
-      review: newReview.review
+      owner_name: newReview.owner_name,
+      owner_avatar: newReview.owner_avatar,
+      star: newReview.star,
+      comment: newReview.comment
     });
   });
+
+  const product = await Product.findOne({ _id: req.params.id });
+
+  product.review.push(newReview._id);
+  product.save();
 };
