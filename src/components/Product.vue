@@ -142,8 +142,7 @@ export default {
     return {
       dialog: false,
       rating: 0,
-      comment: '',
-      commented: false
+      comment: ''
     };
   },
   created() {
@@ -166,6 +165,10 @@ export default {
     product() {
       return this.$store.getters.product;
     },
+    commented(){
+      if(!this.product.review) return;
+      return this.product.review.some(review => review.owner_name === this.currentUser.username) ? true : false;
+    }
   },
   methods: {
     checkout(e) {

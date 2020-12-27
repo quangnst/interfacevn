@@ -50,12 +50,6 @@ export const products = {
   getters: {
     getCart: state => state.cart,
     getCharge: state => state.charge,
-    product: state => state.product,
-    checkComment: state =>
-      state.product.review.some(
-        review => review.owner_name === this.currentUser.username
-      )
-        ? true
-        : false
+    product: state => state.product
   }
 };
