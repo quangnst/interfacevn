@@ -35,6 +35,7 @@ export default {
     this.$store.state.toggle.isLoading = true;
     return ProductsServices.getProducts().then(
       response => {
+        console.log(response.data)
         this.products = response.data.products;
         this.currentPage = response.data.currentPage;
         this.pages = response.data.pages;

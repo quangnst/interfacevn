@@ -23,7 +23,7 @@
                 background-color="warning lighten-3"
                 color="warning"
                 dense
-                :value="rating"
+                :value="getStar"
                 readonly
               ></v-rating>
             </v-card-actions>
@@ -55,22 +55,20 @@
       <div class="row">
         <div class="col-md-5 col-sm-5 col-xs-12">
           <v-card elevation="0">
-            <v-card-title>
-            </v-card-title>
+            <v-card-title> </v-card-title>
             <v-card-text class="pb-0">
               <v-container class="pb-0">
                 <v-row>
                   <template v-if="!commented">
                     <v-col cols="12" class="pa-0">
-
-                        <v-rating
-                          class=""
-                          background-color="warning lighten-3"
-                          color="warning"
-                          dense
-                          size="20"
-                          v-model="rating"
-                        ></v-rating>
+                      <v-rating
+                        class=""
+                        background-color="warning lighten-3"
+                        color="warning"
+                        dense
+                        size="20"
+                        v-model="rating"
+                      ></v-rating>
                     </v-col>
                     <v-col cols="12" class="px-0 pb-0">
                       <v-textarea
@@ -98,10 +96,13 @@
             <template v-for="(item, index) in product.review">
               <v-list-item :key="index">
                 <v-list-item-avatar>
-                  <v-img v-if="item.owner_avatar" :src="item.owner_avatar"></v-img>
+                  <v-img
+                    v-if="item.owner_avatar"
+                    :src="item.owner_avatar"
+                  ></v-img>
 
                   <v-avatar size="80" v-else color="red">
-                    <span class="white--text headline">{{nameShort}}</span>
+                    <span class="white--text headline">{{ nameShort }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
 
@@ -115,7 +116,9 @@
                     :value="item.star"
                     readonly
                   ></v-rating>
-                  <v-list-item-title v-html="item.owner_name"></v-list-item-title>
+                  <v-list-item-title
+                    v-html="item.owner_name"
+                  ></v-list-item-title>
                   <v-list-item-subtitle
                     v-html="item.comment"
                   ></v-list-item-subtitle>
@@ -138,10 +141,10 @@ export default {
   data() {
     return {
       dialog: false,
-      rating: 1,
+      rating: 0,
       comment: '',
       commented: false,
-      product: {},
+      product: {}
     };
   },
   created() {
@@ -150,8 +153,12 @@ export default {
       response => {
         this.product = response.data;
         this.$store.state.toggle.isLoading = false;
-        console.log('product',this.product)
-        this.commented = this.product.review.some(review => review.owner_name === this.currentUser.username) ? true : false
+        console.log('product', this.product);
+        this.commented = this.product.review.some(
+          review => review.owner_name === this.currentUser.username
+        )
+          ? true
+          : false;
       },
       error => {
         console.log(error);
@@ -163,8 +170,14 @@ export default {
       return this.$store.state.auth.user;
     },
     nameShort() {
-      return this.currentUser.username.substring(0,2);
+      return this.currentUser.username.substring(0, 2);
     },
+    getStar() {
+      if (!this.product.review) return;
+      const result = this.product.review.reduce( ( sum, { star } ) => sum + star , 0)
+      const star = Math.ceil(result / this.product.review.length);
+      return star;
+    }
   },
   methods: {
     checkout(e) {
@@ -188,7 +201,7 @@ export default {
         }
       );
     }
-  },
+  }
 };
 </script>
 

@@ -25,7 +25,7 @@
             empty-icon="fal fa-star"
             full-icon="fas fa-star"
             half-icon="fal fa-star-half"
-            :value="4.5"
+            :value="rating"
             color="amber"
             dense
             half-increments
@@ -35,7 +35,7 @@
           ></v-rating>
 
           <div class="card__rating grey--text">
-            4.5 (413)
+            {{product.review.length || 0}} review
           </div>
         </v-col>
       </v-row>
@@ -65,6 +65,14 @@ export default {
   mixins: [mixins],
   methods: {
    
+  },
+  computed: {
+    rating() {
+      if (!this.product.review) return;
+      const result = this.product.review.reduce( ( sum, { star } ) => sum + star , 0)
+      const star = Math.ceil(result / this.product.review.length);
+      return star;
+    }
   }
 };
 </script>

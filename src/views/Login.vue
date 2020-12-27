@@ -15,7 +15,7 @@
           <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
           <v-form name="form" @submit.prevent="handleLogin">
             <v-row>
-              <v-col cols="12">
+              <!-- <v-col cols="12">
                 <v-btn
                   type="submit"
                   min-width="230"
@@ -28,7 +28,7 @@
                   <i class="fab fa-google fa-lg mr-2"></i>
                   <span>Sign in with Google</span>
                 </v-btn>
-              </v-col>
+              </v-col> -->
               <v-col cols="12" class="pb-0">
                 <label for="username" class="mb-2 subtitle-2">Username</label>
                 <v-text-field

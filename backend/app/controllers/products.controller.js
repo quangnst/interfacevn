@@ -14,6 +14,7 @@ exports.getAllProduct = (req, res) => {
     Product.find(condition)
       .limit(perPage)
       .skip(perPage * page)
+      .populate('review')
       .exec(function(err, products) {
         pages = Math.floor(count / perPage);
         if (page === 0) {
