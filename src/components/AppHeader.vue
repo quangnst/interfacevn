@@ -10,9 +10,9 @@
     <v-toolbar-title>
       <router-link to="/"
         ><v-img
-          max-width="160"
+          max-width="70"
           class="logo ma-2 pb-0"
-          src="../assets/img/logo.png"
+          src="../assets/img/fox.svg"
         ></v-img
       ></router-link>
     </v-toolbar-title>

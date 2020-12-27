@@ -9,7 +9,7 @@
           rounded="xl"
           class="pa-12 mx-auto"
         >
-          <v-img max-width="200" class="logo mb-2" src="../assets/img/logo.png"
+          <v-img max-width="200" class="logo mb-2 d-none" src="../assets/img/logo.svg"
       ></v-img>
 
           <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
@@ -114,8 +114,8 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="7">
-        <!-- <v-img max-width="400" class="mx-auto mb-2" src="../assets/img/hamburger.png"
-      ></v-img> -->
+        <v-img max-width="300" class="mx-auto mb-2" src="../assets/img/fox.svg"
+      ></v-img>
       </v-col>
     </v-row>
   </v-container>
