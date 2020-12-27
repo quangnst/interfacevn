@@ -143,27 +143,12 @@ export default {
       dialog: false,
       rating: 0,
       comment: '',
-      commented: false,
-      product: {}
+      commented: false
     };
   },
   created() {
-    this.$store.state.toggle.isLoading = true;
-    return ProductsServices.getProductsById(this.id).then(
-      response => {
-        this.product = response.data;
-        this.$store.state.toggle.isLoading = false;
-        console.log('product', this.product);
-        this.commented = this.product.review.some(
-          review => review.owner_name === this.currentUser.username
-        )
-          ? true
-          : false;
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.$store.dispatch('getProduct', this.id);
+   
   },
   computed: {
     currentUser() {
@@ -177,7 +162,10 @@ export default {
       const result = this.product.review.reduce( ( sum, { star } ) => sum + star , 0)
       const star = Math.ceil(result / this.product.review.length);
       return star;
-    }
+    },
+    product() {
+      return this.$store.getters.product;
+    },
   },
   methods: {
     checkout(e) {
@@ -195,6 +183,7 @@ export default {
       return ProductsServices.addReview(reviewProduct).then(
         response => {
           console.log(response.data);
+          this.$store.commit('addComment', response.data);
         },
         error => {
           console.log(error);
