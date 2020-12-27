@@ -1,6 +1,5 @@
 <template>
   <div class="products__detail">
-{{commented}}
     <v-container fill-height>
       <div class="row">
         <div class="col-md-5 col-sm-5 col-xs-12">

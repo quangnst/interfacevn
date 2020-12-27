@@ -8,6 +8,7 @@ const User = mongoose.model(
     password: String,
     phone: Number,
     files: String,
+    verificationToken: String,
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,

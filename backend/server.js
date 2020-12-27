@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const database = require("./app/config/db.config");
+const config = require("./app/config.json");
 const seeder = require('./app/routes/seeder/products');
 
 const categories = require('./app/routes/categories.routes');
@@ -31,7 +31,7 @@ const db = require("./app/models");
 const Role = db.role;
 
 db.mongoose
-  .connect(database.db, {
+  .connect(config.db, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true

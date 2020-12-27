@@ -1,19 +1,19 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
-const db = require("../models");
+const jwt = require('jsonwebtoken');
+const config = require('../config.json');
+const db = require('../models');
 const User = db.user;
 const Role = db.role;
 
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
+  let token = req.headers['x-access-token'];
 
   if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+    return res.status(403).send({ message: 'No token provided!' });
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
+      return res.status(401).send({ message: 'Unauthorized!' });
     }
     req.userId = decoded.id;
     next();
@@ -38,13 +38,13 @@ isAdmin = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
+          if (roles[i].name === 'admin') {
             next();
             return;
           }
         }
 
-        res.status(403).send({ message: "Require Admin Role!" });
+        res.status(403).send({ message: 'Require Admin Role!' });
         return;
       }
     );
@@ -69,35 +69,34 @@ isModerator = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === 'moderator') {
             next();
             return;
           }
         }
 
-        res.status(403).send({ message: "Require Moderator Role!" });
+        res.status(403).send({ message: 'Require Moderator Role!' });
         return;
       }
     );
   });
 };
 
-isProfile = async(req, res, next) => {
-  const token = req.header('Authorization').replace('Bearer ', '')
-  const data = jwt.verify(token, 'interface-secret-key')
+isProfile = async (req, res, next) => {
+  const token = req.header('Authorization').replace('Bearer ', '');
+  const data = jwt.verify(token, 'interface-secret-key');
   try {
-      const user = await User.findOne({ id: data.userId, 'tokens.token': token })
-      if (!user) {
-          throw new Error()
-      }
-      req.user = user
-      req.token = token
-      next()
+    const user = await User.findOne({ id: data.userId, 'tokens.token': token });
+    if (!user) {
+      throw new Error();
+    }
+    req.user = user;
+    req.token = token;
+    next();
   } catch (error) {
-      res.status(401).send({ error: 'Not authorized to access this resource' })
+    res.status(401).send({ error: 'Not authorized to access this resource' });
   }
-
-}
+};
 
 const authJwt = {
   verifyToken,
