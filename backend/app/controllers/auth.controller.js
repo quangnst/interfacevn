@@ -68,6 +68,7 @@ exports.signup = async (req, res) => {
       });
     }
   });
+  console.log(req.get('origin'))
   // send email
   await sendVerificationEmail(user, req.get('origin'));
 };
@@ -134,6 +135,7 @@ function randomTokenString() {
 }
 
 async function sendVerificationEmail(account, origin) {
+  console.log(origin)
   let message;
   if (origin) {
     const verifyUrl = `${origin}/api/auth/verify-email?token=${account.verificationToken}`;

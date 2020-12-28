@@ -1,13 +1,14 @@
 {
     "db": "mongodb://interface_db:452vanhanh@cluster0-shard-00-00.llsqc.mongodb.net:27017,cluster0-shard-00-01.llsqc.mongodb.net:27017,cluster0-shard-00-02.llsqc.mongodb.net:27017/shopping?ssl=true&replicaSet=atlas-21f2ey-shard-0&authSource=admin&retryWrites=true&w=majority",
     "secret": "interface-secret-key",
-    "emailFrom": "info@node-mongo-signup-verification-api.com",
+    "emailFrom": "quangnst2019@gmail.com",
     "smtpOptions": {
+        "service": "gmail",
         "host": "smtp.ethereal.email",
         "port": 587,
         "auth": {
-            "user": "afton.windler8@ethereal.email",
-            "pass": "jFH569gNUD1Hf4UHvZ"
+            "user": "quangnst2019@gmail.com",
+            "pass": ""
         }
     }
 }
