@@ -2,7 +2,7 @@ const Product = require('../models/product.model');
 const Review = require('../models/review.model');
 
 exports.getAllProduct = (req, res) => {
-  let perPage = 9;
+  let perPage = 12;
   let page = parseInt(req.query.page) || 0;
   let pages = 0;
 

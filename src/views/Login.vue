@@ -1,16 +1,14 @@
 <template>
   <v-container fill-height>
     <v-row justify="space-between" align="center">
-      <v-col cols="12" md="5">
+      <v-col cols="12" md="5" class="order-md-0 order-1">
         <v-card
           flat
           max-width="420"
           color="rgba(255,255,255,.8)"
           rounded="xl"
-          class="pa-12 mx-auto"
+          class="pa-md-12 pa-6 mx-auto"
         >
-          <v-img max-width="200" class="logo mb-2 d-none" src="../assets/img/logo.svg"
-      ></v-img>
 
           <h3 class="text-h3 mb-3 mt-2 font-weight-bold">Sign In</h3>
           <v-form name="form" @submit.prevent="handleLogin">
@@ -114,7 +112,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="7">
-        <v-img max-width="300" class="mx-auto mb-2" src="../assets/img/fox.svg"
+        <v-img max-width="300" class="mx-auto mb-2 pa-4 logo-big" src="../assets/img/fox.svg"
       ></v-img>
       </v-col>
     </v-row>

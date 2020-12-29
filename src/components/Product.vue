@@ -3,7 +3,7 @@
     <v-container fill-height>
       <div class="row">
         <div class="col-md-5 col-sm-5 col-xs-12">
-          <v-carousel height="700">
+          <v-carousel height="600">
             <v-carousel-item :src="product.image"> </v-carousel-item>
             <v-carousel-item :src="product.image"> </v-carousel-item>
             <v-carousel-item :src="product.image"> </v-carousel-item>
@@ -38,16 +38,17 @@
               <v-radio label="L" value="l"></v-radio>
               <v-radio label="XL" value="xl"></v-radio>
             </v-radio-group>
-
-            <v-btn
-              class="primary white--text"
-              outlined
-              tile
-              dense
-              @click="addToCart(product)"
-              ><v-icon class="mr-2">fal fa-cart-plus</v-icon> ADD TO CART</v-btn
-            >
-            <v-btn class="ml-4" outlined tile>ADD TO WISHLIST</v-btn>
+            <div class="d-flex flex-column flex-md-row justify-content-center">
+              <v-btn
+                class="primary white--text mb-2"
+                outlined
+                tile
+                dense
+                @click="addToCart(product)"
+                ><v-icon class="mr-md-2">fal fa-cart-plus</v-icon> ADD TO CART</v-btn
+              >
+              <v-btn class="ml-md-4 mb-2" outlined tile>ADD TO WISHLIST</v-btn>
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +186,6 @@ export default {
       };
       return ProductsServices.addReview(reviewProduct).then(
         response => {
-          console.log(response.data);
           this.$store.commit('addComment', response.data);
         },
         error => {
