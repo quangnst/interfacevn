@@ -60,8 +60,28 @@ exports.getProductById = (req, res) => {
     });
 };
 
+exports.addProduct = (req, res) => {
+  const newProduct = new Product({
+    name: req.body.name,
+    price: req.body.price,
+    category: req.body.category,
+    image: req.body.image,
+    description: req.body.description
+  });
+
+  newProduct.save(newProduct)
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the Tutorial."
+    });
+  });
+};
+
 exports.addReview = async (req, res) => {
-  console.log(req.body)
   const newReview = new Review({
     product_id: req.params.id,
     owner_name: req.body.owner_name,
